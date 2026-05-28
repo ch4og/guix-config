@@ -18,7 +18,9 @@
   #:use-module (gnu packages markup)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages pulseaudio)
+  #:use-module (gnu packages speech)
   #:use-module (gnu packages qt)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
   #:use-module (guix packages)
   #:use-module (guix gexp)
@@ -59,7 +61,7 @@
                  `("LD_LIBRARY_PATH" ":" prefix
                    (,@(map (lambda (dep)
                              (string-append (assoc-ref inputs dep) "/lib"))
-                           '("libx11" "libxext" "libxcursor"
+                           '("libx11" "libxext" "libxcursor" "libxkbcommon" "flite"
                              "libxrandr" "libxxf86vm" "pulseaudio" "mesa")))))
                #t))))))
     (native-inputs
@@ -69,10 +71,12 @@
     (inputs
      (list bash-minimal ; for wrap-program
            cmark
+           flite
            libarchive
            libx11
            libxcursor
            libxext
+           libxkbcommon
            libxrandr
            libxxf86vm
            mesa
