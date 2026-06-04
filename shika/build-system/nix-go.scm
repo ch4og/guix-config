@@ -33,7 +33,7 @@
 (define (default-go)
   ;; Lazily resolve the binding to avoid a circular dependency.
   (let ((go (resolve-interface '(gnu packages golang))))
-    (module-ref go 'go-1.23)))
+    (module-ref go 'go-1.25)))
 
 (define-record-type* <go-vendor-config> go-vendor-config
   make-go-vendor-config
@@ -101,7 +101,7 @@
                                     (invoke "cp" "-r" "--reflink=auto" #$source "modRoot")
                                     (begin
                                       (mkdir-p "modRoot")
-                                      (invoke "tar" "zxvf" #$source "--strip-components=1" "-C" "modRoot"))))
+                                      (invoke "tar" "xvf" #$source "--strip-components=1" "-C" "modRoot"))))
 
                               (chdir "modRoot")
                               (chmod "." #o755)
@@ -140,6 +140,16 @@
                                         (tidy? tidy?)))
                  (file-name name)
                  (hash (pkgs:content-hash (nix-base32-string->bytevector vendor-hash) sha256))))
+
+  (define go-os
+    (cadr (string-split system #\-)))
+
+  (define go-arch
+    (let ((arch (car (string-split system #\-))))
+      (cond
+       ((string=? arch "x86_64") "amd64")
+       ((string=? arch "aarch64") "arm64")
+       (else #f))))
 
   (define go-toolchain
     (if go
@@ -182,12 +192,16 @@
        (outputs outputs)
        (build nix-go-build)
        (arguments (cons* #:build-flags build-flags
+                         #:goos go-os
+	                 #:goarch go-arch
+                         #:go-version (pkgs:package-version go-toolchain)
                          (strip-keyword-arguments private-keywords arguments)))))
 
 (define* (nix-go-build name
                        inputs
                        #:key
                        source
+                       go-version
                        (phases '%standard-phases)
                        (outputs '("out"))
                        (search-paths '())
@@ -209,7 +223,7 @@
                                   (guix build utils)))
 
                        (substitutable? #t))
-  
+
   (define builder
     (with-imported-modules imported-modules
       #~(begin
@@ -219,6 +233,7 @@
             #$(outputs->gexp outputs))
 
           (nix-go-build #:name #$name
+                        #:go-version #$go-version
                         #:source #+source
                         #:system #$system
                         #:phases #$phases

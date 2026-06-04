@@ -6,9 +6,12 @@
   #:use-module (guix build utils)
   #:use-module ((guix build gnu-build-system) #:prefix gnu:)
   #:use-module (srfi srfi-1)
+  #:use-module (ice-9 match)
   #:export (%standard-phases nix-go-build))
 
-(define* (setup-nix-go-environment #:key goos goarch #:allow-other-keys)
+(define* (setup-nix-go-environment #:key parallel-build? inputs
+	                           goos system goarch go-version
+	                           #:allow-other-keys)
   (let ((tmpdir (or (getenv "TMPDIR") "/tmp")))
     (setenv "TMPDIR" "/tmp")
     (setenv "GOPATH" (string-append tmpdir "/go"))
@@ -22,7 +25,16 @@
     (setenv "GOTELEMETRY" "off")
     (setenv "GOFLAGS" "-mod=vendor -trimpath")
     (setenv "GOOS" goos)
-    (setenv "GOARCH" goarch)))
+    (setenv "GOARCH" goarch)
+    (setenv "GOMAXPROCS"
+	    (number->string
+	     (if parallel-build?
+	         (parallel-job-count)
+	         1)))
+    (match (map string->number (string-split go-version #\.))
+      ((1 major _)
+       (when (> major 24)
+	 (setenv "GOEXPERIMENT" "greenteagc"))))))
 
 (define* (symlink-vendor #:key inputs #:allow-other-keys)
   (let ((vendor-dir (assoc-ref inputs "vendor")))
