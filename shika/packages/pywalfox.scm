@@ -15,13 +15,13 @@
 (define-public pywalfox
   (package
     (name "pywalfox")
-    (version "2.7.4")
+    (version "2.9.0")
     (source
      (origin
        (method url-fetch)
        (uri (pypi-uri name version))
        (sha256
-        (base32 "0rpdh1k4b37n0gcclr980vz9pw3ihhyy0d0nh3xp959q4xz3vrsr"))))
+        (base32 "009mvn2f5i2nvaiygjniy3bv86yswm2z41a9644qd9yzg97yw3ca"))))
     (build-system pyproject-build-system)
     (arguments
      (list
