@@ -5,7 +5,7 @@
   #:use-module (guix packages)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages libusb)
-  #:use-module (gnu packages avahi)
+  #:use-module (gnu packages dns)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages gstreamer)
