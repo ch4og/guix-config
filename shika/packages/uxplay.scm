@@ -16,7 +16,7 @@
 (define-public uxplay
   (package
     (name "uxplay")
-    (version "1.73.3")
+    (version "1.73.6")
     (source
      (origin
        (method git-fetch)
@@ -25,7 +25,7 @@
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "19m844srs5qljs1d542c40di5ybv0ld3lzqnfmaaf1l5lsnp6gqp"))))
+        (base32 "1qbcfw3ydq0hf4zjw68m48wycng8i9wampasb2hw6n926jnsn2im"))))
     (build-system cmake-build-system)
     (arguments
      '(#:tests? #f)) ;tests do not exist
