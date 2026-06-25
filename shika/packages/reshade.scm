@@ -11,7 +11,7 @@
 (define-public reshade
   (package
     (name "reshade")
-    (version "6.7.1")
+    (version "6.7.3")
     (source
      (origin
        (method git-fetch)
@@ -20,7 +20,7 @@
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0d50jjz41zfrycwl2j0ywn9h031alzy1x1r5pw1pbybxm38l7acj"))))
+        (base32 "0sjsg2rdkvrb7v25ckj4rxz5z555rdik1x2irgv57mjc80bd4lvw"))))
     (build-system copy-build-system)
     (home-page "https://github.com/crosire/reshade")
     (synopsis
