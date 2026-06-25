@@ -13,7 +13,7 @@
   (package
     (inherit xdg-desktop-portal-wlr)
     (name "xdg-desktop-portal-wlr")
-    (version "0.8.1")
+    (version "0.8.3")
     (source
      (origin
        (method git-fetch)
@@ -22,7 +22,7 @@
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0dm9zbg91h7rq3ks00brfmc3yhdlsfa4059np34xcabikdyp0nqn"))
+        (base32 "07baklrmqg74bsqp2grs6gd6a0pmid7byzf5azyfq9rmbi2wf4rh"))
        (patches (search-patches "xdg-desktop-portal-wlr-harcoded-length.patch"))))))
 
 xdg-desktop-portal-wlr-1
