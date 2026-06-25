@@ -37,13 +37,13 @@
 (define-public waypaper
   (package
     (name "waypaper")
-    (version "2.7")
+    (version "2.8")
     (source
      (origin
        (method url-fetch)
        (uri (pypi-uri name version))
        (sha256
-        (base32 "1ifz3rh395yixn39caq0gjacy5gqlan0m21b8k4fyh6fk6cm7k1g"))))
+        (base32 "14gq3ln631q0f5gzdmy1i2bld0bx5av9p6am8z88ij1in9xas61x"))))
     (build-system pyproject-build-system)
     (arguments
      (list
