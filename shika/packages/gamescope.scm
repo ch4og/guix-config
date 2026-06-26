@@ -7,15 +7,17 @@
   #:use-module (guix packages)
   #:use-module (guix build-system meson)
   #:use-module (gnu packages bash)
-  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages check)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages game-development)
-  #:use-module (gnu packages maths)
-  #:use-module (gnu packages stb)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages lua)
-  #:use-module (gnu packages sdl)
+  #:use-module (gnu packages maths)
   #:use-module (gnu packages pciutils)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages python-check)
+  #:use-module (gnu packages sdl)
+  #:use-module (gnu packages stb)
   #:use-module (gnu packages vulkan)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
@@ -24,7 +26,7 @@
   #:use-module (shika utils override)
   #:use-module ((guix licenses) #:prefix license:))
 
-(define-public vkroots
+(define vkroots-valve
   (let ((commit "5106d8a0df95de66cc58dc1ea37e69c99afc9540"))
     (package
       (name "vkroots")
@@ -64,21 +66,6 @@ complexity/hastle away from you! It's so simple!")
                       "1zvhf3pgd8bhn8bynrsh725xn1dszsf05j8c9g6zabgv7vnz04a5"
                       #:home-page "https://github.com/misyltoad/reshade"))
 
-(define spirv-headers-for-gamescope
-  (shika-override spirv-headers
-                      #:version "1.3.261"
-                      #:commit "d790ced752b5bfc06b6988baadef6eb2d16bdf96"
-                      #:hash
-                      "1zzkqbqysiv52dk92i35gsyppnasln3d27b4rqv590zknk5g38is"))
-
-(define openvr-for-gamescope
-  (shika-override openvr
-                      #:version "2.12.1"
-                      #:commit "ff87f683f41fe26cc9353dd9d9d7028357fd8e1a"
-                      #:hash
-                      "0ds605hi4v5l7cly2dbydx20257dwjm216ig0vr6aswq37a8vl29"))
-
-;; guix has 0.5.0 too but we will lock it
 (define libliftoff-for-gamescope
   (shika-override libliftoff
                       #:version "0.5.0"
@@ -89,7 +76,7 @@ complexity/hastle away from you! It's so simple!")
 (define-public gamescope
   (package
     (name "gamescope")
-    (version "3.16.22")
+    (version "3.16.24")
     (source
      (origin
        (method git-fetch)
@@ -98,10 +85,11 @@ complexity/hastle away from you! It's so simple!")
               (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0yja2cgn2w0bmdp096523alz2ymp8jc1sfrgqnfkvjck8rnbr228"))))
+        (base32 "008yydjn6hqysfxm6s16hrz0xkh2zw2y8frrnd5ki7mag5xrm4bf"))))
     (build-system meson-build-system)
     (native-inputs (list bash-minimal pkg-config))
-    (inputs (list eudev
+    (inputs (list catch2
+                  eudev
                   glm
                   glslang
                   hwdata
@@ -118,21 +106,22 @@ complexity/hastle away from you! It's so simple!")
                   libxtst
                   libxxf86vm
                   luajit
+                  openvr
                   pixman
+                  python-gcovr
                   sdl2
+                  spirv-headers
                   stb-image
                   stb-image-resize
                   stb-image-write
-                  vkroots
                   vulkan-loader
                   wayland
                   wayland-protocols
 
-                  openvr-for-gamescope
-                  spirv-headers-for-gamescope
                   reshade-for-gamescope
                   libliftoff-for-gamescope
-                  wlroots-for-gamescope))
+                  wlroots-for-gamescope
+                  vkroots-valve))
     (arguments
      (list
       #:phases
