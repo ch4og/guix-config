@@ -19,7 +19,7 @@
     (source
      (origin
        (method url-fetch)
-       (uri (pypi-uri name version))
+       (uri ((@ (guix build-system pyproject) pypi-uri) name version))
        (sha256
         (base32 "009mvn2f5i2nvaiygjniy3bv86yswm2z41a9644qd9yzg97yw3ca"))))
     (build-system pyproject-build-system)
