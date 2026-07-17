@@ -19,7 +19,7 @@
   #:use-module (gnu packages sdl)
   #:use-module (gnu packages stb)
   #:use-module (gnu packages vulkan)
-  #:use-module (gnu packages wm)
+  #:use-module (gnu packages window-management)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
   #:use-module (shika packages reshade)
