@@ -21,7 +21,7 @@
     (source
      (origin
        (method url-fetch)
-       (uri (pypi-uri "screeninfo" version))
+       (uri ((@ (guix build-system pyproject) pypi-uri) "screeninfo" version))
        (sha256
         (base32 "1l9frlckb9zbwx5kngxv5byi353jyfmpskcy38m40d3yrimhg0wr"))))
     (build-system pyproject-build-system)
@@ -41,7 +41,7 @@
     (source
      (origin
        (method url-fetch)
-       (uri (pypi-uri name version))
+       (uri ((@ (guix build-system pyproject) pypi-uri) name version))
        (sha256
         (base32 "14gq3ln631q0f5gzdmy1i2bld0bx5av9p6am8z88ij1in9xas61x"))))
     (build-system pyproject-build-system)
