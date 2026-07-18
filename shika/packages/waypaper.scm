@@ -27,7 +27,7 @@
     (build-system pyproject-build-system)
     (arguments
      (list
-      #:tests? #f)) ;Tests do not exist.
+      #:tests? #f))
     (native-inputs (list python-poetry-core))
     (home-page "https://github.com/rr-/screeninfo")
     (synopsis "Fetch location and size of physical screens.")
@@ -47,7 +47,7 @@
     (build-system pyproject-build-system)
     (arguments
      (list
-      #:tests? #f ;Tests do not exist.
+      #:tests? #f
       #:imported-modules `((guix build glib-or-gtk-build-system)
                            ,@%pyproject-build-system-modules)
       #:modules '((guix build pyproject-build-system)
@@ -55,7 +55,7 @@
                   ((guix build glib-or-gtk-build-system) #:prefix gtk:))
       #:phases
       #~(modify-phases %standard-phases
-          (delete 'sanity-check) ;Won't work and not needed for GUI app.
+          (delete 'sanity-check)
           (add-after 'wrap 'glib-or-gtk-wrap
             (assoc-ref gtk:%standard-phases 'glib-or-gtk-wrap))
           (add-after 'wrap 'wrap-gi
@@ -63,18 +63,21 @@
               (let* ((waypaper (string-append #$output "/bin/waypaper"))
                      (gtk+ #$(this-package-input "gtk+"))
                      (at-spi2-core #$(this-package-input "at-spi2-core"))
+                     (g-i #$(this-package-input "gobject-introspection"))
                      (gtk+_gi (string-append gtk+ "/lib/girepository-1.0"))
-                     (at-spi2-core_gi (string-append at-spi2-core "/lib/girepository-1.0")))
+                     (at-spi2-core_gi (string-append at-spi2-core "/lib/girepository-1.0"))
+                     (g-i_gi (string-append g-i "/lib/girepository-1.0")))
                 (wrap-program waypaper
-                  `("GI_TYPELIB_PATH" ":" prefix (,gtk+_gi ,at-spi2-core_gi)))))))))
+                  `("GI_TYPELIB_PATH" ":" prefix (,gtk+_gi ,at-spi2-core_gi ,g-i_gi)))))))))
     (native-inputs (list python-setuptools))
     (inputs (list at-spi2-core
                   gdk-pixbuf
+                  gobject-introspection
                   gtk+
                   python-imageio
                   python-imageio-ffmpeg
                   python-platformdirs
-                  python-pygobject-3.50
+                  python-pygobject
                   python-screeninfo))
     (home-page "https://anufrievroman.gitbook.io/waypaper")
     (synopsis "GUI wallpaper manager for Wayland and Xorg Linux systems")
