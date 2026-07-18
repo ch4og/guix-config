@@ -21,7 +21,7 @@
   #:use-module (gnu packages vulkan)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
-  #:use-module (shika packages otd)
+  #:use-module (shika packages opentabletdriver)
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public osu-lazer-bin
