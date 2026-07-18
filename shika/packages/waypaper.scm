@@ -62,11 +62,14 @@
             (lambda _
               (let* ((waypaper (string-append #$output "/bin/waypaper"))
                      (gtk+ #$(this-package-input "gtk+"))
-                     (gtk+_gi (string-append gtk+ "/lib/girepository-1.0")))
+                     (at-spi2-core #$(this-package-input "at-spi2-core"))
+                     (gtk+_gi (string-append gtk+ "/lib/girepository-1.0"))
+                     (at-spi2-core_gi (string-append at-spi2-core "/lib/girepository-1.0")))
                 (wrap-program waypaper
-                  `("GI_TYPELIB_PATH" ":" prefix (,gtk+_gi)))))))))
+                  `("GI_TYPELIB_PATH" ":" prefix (,gtk+_gi ,at-spi2-core_gi)))))))))
     (native-inputs (list python-setuptools))
-    (inputs (list gdk-pixbuf
+    (inputs (list at-spi2-core
+                  gdk-pixbuf
                   gtk+
                   python-imageio
                   python-imageio-ffmpeg
