@@ -25,6 +25,7 @@
                              (home-page (package-home-page base)))
   (package
     (inherit base)
+    (name name)
     (version
      (if (string-prefix? "v" commit)
          version
