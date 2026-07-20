@@ -62,7 +62,7 @@ HID access, concurrency primitives, and various utilities.")
 (define-public webhid-for-firefox
   (package
     (name "webhid-for-firefox")
-    (version "0.2.99")
+    (version "0.2.101")
     (source
      (origin
        (method git-fetch)
@@ -70,7 +70,7 @@ HID access, concurrency primitives, and various utilities.")
              (url (string-append "https://github.com/ch4og/WebHID-for-Firefox"))
              (commit version)))
        (sha256
-        (base32 "1jf8x86nphicgkdyvhf31k99m6bh9dhlsjnl3hhpzaar808smsjz"))))
+        (base32 "1rlyddh6qn5s78f3slmrbf1xnnma65mrsj676zrw4zv0lsy0y4q4"))))
     (build-system gnu-build-system)
     (arguments
      (list
@@ -116,14 +116,14 @@ not work with this forked server.")
   (make-icecat-extension
    (package
      (name "webhid-for-firefox")
-     (version "0.2.99")
+     (version "0.2.101")
      (source (origin
                (method url-fetch/zipbomb)
                (uri (string-append "https://github.com/ch4og/WebHID-for-Firefox"
                                    "/releases/download/" version
-                                   "/WebHID-for-Firefox-" version ".xpi"))
+                                   "/WebHID-for-Firefox.xpi"))
                (sha256
-                (base32 "1z00r1xzhfi3hc3pixcffi0kz2650lc81ni8rlwfadlhz8vra57c"))))
+                (base32 "1z11r1111fi3hc3pixcffi0kz2650lc11ni8rlwfadlhz8vra57c"))))
      (build-system copy-build-system)
      (arguments
       (list #:install-plan
