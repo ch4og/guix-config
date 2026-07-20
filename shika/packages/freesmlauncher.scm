@@ -4,7 +4,7 @@
 ;;; SPDX-FileCopyrightText: 2026 Nikita Mitasov <me@ch4og.com>
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 
-(define-module (shika packages freesm)
+(define-module (shika packages freesmlauncher)
   #:use-module (guix build-system cmake)
   #:use-module (gnu packages aidc)
   #:use-module (gnu packages backup)
@@ -25,13 +25,12 @@
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
-  #:use-module ((guix licenses) :prefix license:)
-  #:use-module ((nonguix licenses) :prefix non-license:))
+  #:use-module ((guix licenses) :prefix license:))
 
 (define-public freesmlauncher
   (package
     (name "freesmlauncher")
-    (version "2.1.0")
+    (version "2.2.2")
     (source (origin
               (method git-fetch)
               (uri (git-reference
@@ -41,35 +40,39 @@
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "1hswz28iz0y12i78ys1a8f74pav45imsi26h0jrsakdvav98nscn"))))
+                "1m4hvqy6masvkp3fr2m6km25xmf8lywyhkdfbkis1qwnihpclsz8"))))
     (build-system cmake-build-system)
     (arguments
      (list
-        #:phases
-       #~(modify-phases %standard-phases
-         (add-after 'install 'patch-paths
-           (lambda* (#:key inputs #:allow-other-keys)
-             (let ((bin (string-append #$output "/bin/freesmlauncher"))
+      #:configure-flags
+      #~(list "-DCMAKE_CXX_FLAGS=-Wno-array-bounds")
+      ;; -Wno-array-bounds silences a false positive
+      ;; TODO: drop once https://github.com/PrismLauncher/PrismLauncher/pull/5807 is merged
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'install 'patch-paths
+            (lambda* (#:key inputs #:allow-other-keys)
+              (let ((bin (string-append #$output "/bin/freesmlauncher"))
                     (xrandr (assoc-ref inputs "xrandr"))
                     (qtwayland (assoc-ref inputs "qtwayland"))
                     (qtsvg (assoc-ref inputs "qtsvg")))
-               (wrap-program bin
-                 `("PATH" ":" prefix (,(string-append xrandr "/bin")))
-                 `("QT_PLUGIN_PATH" ":" prefix ,(map (lambda (package)
-                                                       (string-append package "/lib/qt6/plugins"))
-                                                     (list qtwayland qtsvg)))
-                 `("LD_LIBRARY_PATH" ":" prefix
-                   (,@(map (lambda (dep)
-                             (string-append (assoc-ref inputs dep) "/lib"))
-                           '("libx11" "libxext" "libxcursor" "libxkbcommon" "flite"
-                             "libxrandr" "libxxf86vm" "pulseaudio" "mesa")))))
-               #t))))))
+                (wrap-program bin
+                  `("PATH" ":" prefix (,(string-append xrandr "/bin")))
+                  `("QT_PLUGIN_PATH" ":" prefix ,(map (lambda (package)
+                                                        (string-append package "/lib/qt6/plugins"))
+                                                      (list qtwayland qtsvg)))
+                  `("LD_LIBRARY_PATH" ":" prefix
+                    (,@(map (lambda (dep)
+                              (string-append (assoc-ref inputs dep) "/lib"))
+                            '("libx11" "libxext" "libxcursor" "libxkbcommon" "flite"
+                              "libxrandr" "libxxf86vm" "pulseaudio" "mesa")))))
+                #t))))))
     (native-inputs
      (list extra-cmake-modules
            gamemode
            pkg-config))
     (inputs
-     (list bash-minimal ; for wrap-program
+     (list bash-minimal
            cmark
            flite
            libarchive
@@ -107,6 +110,4 @@ with offline account without any restrictions.")
                    license:public-domain ; xz-minidec, murmur2, xz-embedded
                    license:bsd-3         ; ColumnResizer, O2 (Katabasis fork),
                                          ; gamemode, localpeer
-                   license:asl2.0        ; classparser, systeminfo
-                   ;; Batch icon set:
-                   (non-license:nonfree "file://COPYING.md")))))
+                   license:asl2.0))))    ; classparser, systeminfo
