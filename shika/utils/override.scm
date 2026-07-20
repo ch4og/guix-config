@@ -23,24 +23,26 @@
                              (inputs (package-inputs base))
                              (native-inputs (package-native-inputs base))
                              (home-page (package-home-page base)))
-  (package
-    (inherit base)
-    (name name)
-    (version
-     (if (string-prefix? "v" commit)
-         version
-         (git-version version "0" commit)))
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-              (commit commit)
-              (url url)))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 hash))))
-    (inputs inputs)
-    (native-inputs native-inputs)
-    (home-page home-page)))
+  (let* ((shika-inputs inputs)
+         (shika-native-inputs native-inputs))
+    (package
+      (inherit base)
+      (name name)
+      (version
+       (if (string-prefix? "v" commit)
+           version
+           (git-version version "0" commit)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+                (commit commit)
+                (url url)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 hash))))
+      (inputs shika-inputs)
+      (native-inputs shika-native-inputs)
+      (home-page home-page))))
 
 (define-deprecated/alias shika-git-override shika-override)
