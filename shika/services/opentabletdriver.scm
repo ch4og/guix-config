@@ -19,5 +19,5 @@
                 (description
                  "OpenTabletDriver udev rules.")
                 (extensions (list (service-extension udev-service-type
-                                                     (list opentabletdriver-udev-rules))))
+                                                     (const (list opentabletdriver-udev-rules)))))
                 (default-value #f)))
