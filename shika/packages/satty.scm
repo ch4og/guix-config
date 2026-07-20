@@ -19,7 +19,7 @@
 (define-public satty
   (package
     (name "satty")
-    (version "0.20.1")
+    (version "0.21.1")
     (source
      (origin
        (method git-fetch)
@@ -28,11 +28,12 @@
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1fzz0wmzzjzqskbc8ss5yjifk4w5hd6cway740f8cyrfj5rwq7d5"))))
+        (base32 "1c9gwipw5j5r6mxqzv77aw1mp7ww19bx44c5c9zrwyg2qvw7agx4"))))
     (build-system cargo-build-system)
     (arguments
      (list
       #:install-source? #f
+      #:features ''("ci-release")
       #:imported-modules `((guix build glib-or-gtk-build-system)
                            ,@%cargo-build-system-modules)
       #:modules '((guix build cargo-build-system)
@@ -50,6 +51,10 @@
                          gnu-make))
     (inputs (cons* gtk
                    libadwaita
+                   gdk-pixbuf
+                   glib
+                   libepoxy
+                   mesa
                    (shika-cargo-inputs 'satty)))
     (home-page "https://github.com/Satty-org/Satty")
     (synopsis "Modern Screenshot Annotation.")
