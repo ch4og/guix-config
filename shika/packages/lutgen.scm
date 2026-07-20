@@ -12,14 +12,14 @@
 (define-public lutgen
   (package
     (name "lutgen")
-    (version "1.0.1")
+    (version "1.1.1")
     (source
      (origin
        (method url-fetch)
        (uri (crate-uri "lutgen-cli" version))
        (file-name (string-append "lutgen-cli" "-" version ".tar.gz"))
        (sha256
-        (base32 "00a3a73gh23vqh7b54cmd8hvc0l0m6rignyd7m7z2g5g27ag190v"))))
+        (base32 "0vxa4z3gz57ilkfmdyqprv395zd92wqvmf3jjb88wx5a7ymfv0zj"))))
     (build-system cargo-build-system)
     (arguments
      (list #:tests? #f))
