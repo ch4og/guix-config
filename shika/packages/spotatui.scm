@@ -3,12 +3,14 @@
 
 (define-module (shika packages spotatui)
   #:use-module (guix packages)
+  #:use-module (guix gexp)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages rust)
   #:use-module (gnu packages tls)
   #:use-module (guix git-download)
   #:use-module (guix build-system cargo)
+  #:use-module (guix utils)
   #:use-module (shika utils cargo)
   #:use-module ((guix licenses) #:prefix license:))
 
@@ -32,7 +34,13 @@
                    (shika-cargo-inputs 'spotatui)))
     (arguments
      (list
-      #:rust rust-1.88))
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'remove-patch-section
+            (lambda _
+              (substitute* "Cargo.toml"
+                (("\\[patch\\.crates-io\\][\\s\\S]*" _)
+                 "")))))))
     (home-page "https://github.com/LargeModGames/spotatui")
     (synopsis
      "A Spotify client for the terminal written in Rust, powered by Ratatui.")
