@@ -24,7 +24,7 @@
              (url "https://github.com/calamity-inc/Soup")
              (commit commit)))
        (sha256
-        (base32 "1b7n2hhxnsd7gkl8k4mn5dz9qfyaxa9pqa8ri59xxbm30v0cfzvh"))))
+        (base32 "1ji78qz7xkm5jqmcpqfy0h8914w8v66yzhh7yiyg54vy71h2rw4q"))))
     (build-system gnu-build-system)
     (arguments
      (list
@@ -121,9 +121,9 @@ not work with this forked server.")
                (method url-fetch/zipbomb)
                (uri (string-append "https://github.com/ch4og/WebHID-for-Firefox"
                                    "/releases/download/" version
-                                   "/WebHID-for-Firefox.xpi"))
+                                   "/webhid_for_firefox-" version ".xpi"))
                (sha256
-                (base32 "0zc1p5w1dddcmnrx6mdrw4av71y49wgsv04mzql3y12wlx6vjizs"))))
+                (base32 "1jszw4xgmbdw1c0r6gyqnj5z7fbiln0j2dihivyj7v88irp0svwn"))))
      (build-system copy-build-system)
      (arguments
       (list #:install-plan
