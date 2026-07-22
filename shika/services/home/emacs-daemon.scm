@@ -10,7 +10,7 @@
 ;;;            (home-emacs-daemon-configuration
 ;;;             (emacs (specification->package "emacs-pgtk"))))
 
-(define-module (shika services home-emacs-daemon)
+(define-module (shika services home emacs-daemon)
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix records)
