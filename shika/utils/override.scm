@@ -20,6 +20,7 @@
                                         (git-reference-url uri)
                                         uri)))
                              hash
+                             (patches '())
                              (inputs (package-inputs base))
                              (native-inputs (package-native-inputs base))
                              (home-page (package-home-page base)))
@@ -40,7 +41,8 @@
                 (url url)))
          (file-name (git-file-name name version))
          (sha256
-          (base32 hash))))
+          (base32 hash))
+         (patches patches)))
       (inputs shika-inputs)
       (native-inputs shika-native-inputs)
       (home-page home-page))))
