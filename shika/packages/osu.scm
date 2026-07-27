@@ -7,6 +7,7 @@
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (nonguix build-system binary)
+  #:use-module (gnu packages audio)
   #:use-module (gnu packages base)
   #:use-module (gnu packages commencement)
   #:use-module (gnu packages compression)
@@ -61,21 +62,23 @@
                       (symlink bin wrapper)
                       (wrap-program wrapper
                         `("OSU_EXTERNAL_UPDATE_PROVIDER" = ("1"))
-                        `("SDL_VIDEODRIVER" = ("wayland"))
+                        `("SDL_VIDEODRIVER" = ("wayland,x11"))
                         `("LD_LIBRARY_PATH" prefix (,(string-append #$output "/lib/osu")
-                                                     ,(string-append #$(this-package-input "mesa") "/lib")
-                                                     ,(string-append #$(this-package-input "vulkan-loader") "/lib")
-                                                     ,(string-append #$(this-package-input "libdrm") "/lib")
-                                                     ,(string-append #$(this-package-input "wayland") "/lib")
-                                                     ,(string-append #$(this-package-input "libxkbcommon") "/lib")
-                                                     ,(string-append #$(this-package-input "libxcb") "/lib")
-                                                     ,(string-append #$(this-package-input "libxext") "/lib")
-                                                     ,(string-append #$(this-package-input "glib") "/lib")
-                                                     ,(string-append #$(this-package-input "icu4c") "/lib")
-                                                     ,(string-append #$(this-package-input "openssl") "/lib")
-                                                     ,(string-append #$(this-package-input "alsa-lib") "/lib")
-                                                     ,(string-append #$(this-package-input "dbus") "/lib")
-                                                     ,(string-append #$(this-package-input "gcc-toolchain") "/lib")))))))
+                                                      ,(string-append #$(this-package-input "mesa") "/lib")
+                                                      ,(string-append #$(this-package-input "vulkan-loader") "/lib")
+                                                      ,(string-append #$(this-package-input "libdrm") "/lib")
+                                                      ,(string-append #$(this-package-input "wayland") "/lib")
+                                                      ,(string-append #$(this-package-input "libxkbcommon") "/lib")
+                                                      ,(string-append #$(this-package-input "libxcb") "/lib")
+                                                      ,(string-append #$(this-package-input "libxext") "/lib")
+                                                      ,(string-append #$(this-package-input "glib") "/lib")
+                                                      ,(string-append #$(this-package-input "icu4c") "/lib")
+                                                      ,(string-append #$(this-package-input "openssl") "/lib")
+                                                      ,(string-append #$(this-package-input "alsa-lib") "/lib")
+                                                      ,(string-append #$(this-package-input "pipewire") "/lib")
+                                                      ,(string-append #$(this-package-input "dbus") "/lib")
+                                                      ,(string-append #$(this-package-input "gcc-toolchain") "/lib")))))))
+
                 (add-after 'wrap-program 'fix-so
                   (lambda _
                     (symlink (string-append #$(this-package-input "lttng-ust") "/lib/liblttng-ust.so")
@@ -131,6 +134,7 @@
             lttng-ust
             mesa
             openssl
+            pipewire
             vulkan-loader
             wayland
             zlib))
