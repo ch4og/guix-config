@@ -1,3 +1,7 @@
+;;; SPDX-FileCopyrightText: 2025 Hilton Chain <hako@ultrarare.space>
+;;; SPDX-FileCopyrightText: 2025-2026 Nikita Mitasov <me@ch4og.com>
+;;; SPDX-License-Identifier: GPL-3.0-or-later
+
 (define-module (shika packages rust-sources)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system cargo)
