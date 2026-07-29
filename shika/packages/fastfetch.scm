@@ -3,13 +3,11 @@
 
 (define-module (shika packages fastfetch)
   #:use-module (guix packages)
-  #:use-module (gnu packages admin))
+  #:use-module (gnu packages admin)
+  #:use-module (shika utils override))
 
 (define-public fastfetch-no-zfs
-  (package
-    (inherit fastfetch-minimal)
-    (name "fastfetch-no-zfs")
-    (inputs
-     (modify-inputs (package-inputs fastfetch)
-       (delete "zfs")))))
+  (shika-override fastfetch-minimal
+                  #:name "fastfetch-no-zfs"
+                  #:inputs (delete "zfs" (package-inputs fastfetch))))
 fastfetch-no-zfs
