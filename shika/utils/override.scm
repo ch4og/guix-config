@@ -6,9 +6,7 @@
   #:use-module (guix download)
   #:use-module (guix packages)
   #:use-module (guix gexp)
-  #:use-module (guix deprecation)
-  #:export (shika-override
-            shika-git-override))
+  #:export (shika-override))
 
 (define* (shika-override base
                              #:key
@@ -46,5 +44,3 @@
       (inputs shika-inputs)
       (native-inputs shika-native-inputs)
       (home-page home-page))))
-
-(define-deprecated/alias shika-git-override shika-override)
