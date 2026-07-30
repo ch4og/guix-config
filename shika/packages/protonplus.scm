@@ -65,10 +65,12 @@ It works with Steam, Lutris, Heroic Games Launcher and Bottles. It uses GTK4.")
           (add-after 'install 'set-home
             (lambda _
               (let* ((bin (string-append #$output "/bin/protonplus"))
-                     (new-home "$HOME/.local/share/guix-sandbox-home/"))
+                     (new-home "$HOME/.local/share/guix-sandbox-home/")
+                     (prefix (string-append "${GUIX_SANDBOX_HOME:-" new-home "}")))
                 (wrap-program bin
-                  `("HOME" =
-                    (,(string-append "${GUIX_SANDBOX_HOME:-" new-home "}"))))))))))
+                  `("HOME" = (,(prefix)))
+                  `("XDG_DATA_HOME" = (,(string-append prefix "/.local/share")))
+                  `("XDG_CONFIG_HOME" = (,(string-append prefix "/.config"))))))))))
     (synopsis "Simple Wine and Proton-based compatibility tools manager.
 Patched for nonguix container path.")))
 
