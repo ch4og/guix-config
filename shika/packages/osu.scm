@@ -6,8 +6,11 @@
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
+  #:use-module (guix build utils)
+  #:use-module (shika build-system complex-binary)
   #:use-module (nonguix build-system binary)
   #:use-module (gnu packages audio)
+  #:use-module (gnu packages bash)
   #:use-module (gnu packages base)
   #:use-module (gnu packages commencement)
   #:use-module (gnu packages build-tools)
@@ -153,6 +156,43 @@
 Currently known by and released under the release codename lazer. As in
 sharper than cutting-edge.")
     (license license:expat)))
+
+(define-public tosu
+  (package
+    (name "tosu")
+    (version "4.25.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/tosuapp/tosu/releases/download/v"
+             version "/tosu-linux-v" version ".zip"))
+       (sha256
+        (base32 "0ckryhxd21fa1i01831kzlrpyk862wvmnr7sq9kpcs2cv80287qs"))))
+    (build-system complex-binary-build-system)
+    (arguments
+     (list
+      #:install-plan #~'(("tosu" "bin/tosu"))
+      #:wrapper-plan #~'(("bin/tosu" ".tosu-real"))
+      #:wrapper-mode 'pkg
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'create-binary-wrapper 'setup
+            (lambda* (#:key outputs #:allow-other-keys)
+              (wrap-program
+               (string-append (assoc-ref outputs "out") "/bin/tosu")
+               `("ENABLE_AUTOUPDATE" = ("false"))))))))
+    (native-inputs (list patchelf unzip))
+    (inputs
+     (list bash-minimal gcc-toolchain icu4c))
+    (home-page "https://github.com/tosuapp/tosu")
+    (synopsis "Real-time memory reader and overlay host for osu!")
+    (description
+     "tosu is a real-time memory reader and overlay host for osu! (stable and
+lazer).  It attaches to a running osu! process, reads game state from memory,
+calculates performance points, and exposes the data over HTTP and WebSockets
+for overlay clients.")
+    (license license:gpl3+)))
 
 (define-public tosu-overlay
   (package
