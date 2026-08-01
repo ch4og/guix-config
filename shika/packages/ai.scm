@@ -7,6 +7,9 @@
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix download)
+  #:use-module (guix git-download)
+  #:use-module (shika build-system nix-go)
+  #:use-module (gnu packages golang)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages elf)
@@ -143,3 +146,43 @@ handle entire workflows.  This package disables auto-updates.")
     (license
      (nonlicense:nonfree
       "https://code.claude.com/docs/en/legal-and-compliance"))))
+
+(define-public cli-proxy-api
+  (package
+    (name "cli-proxy-api")
+    (version "7.2.112")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/router-for-me/CLIProxyAPI")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0qqzh7vx775jlz5xbxwyskmnmia221qa8nn9igkrpjaj1vkm4ymy"))))
+    (build-system nix-go-build-system)
+    (arguments
+     `(#:vendor-hash "1iv4hsny5bxgsjx4gylg2p3w2cqlq73v839n3jd2vybw0nf70g8y"
+       #:tidy? #f
+       #:go ,go-1.26
+       #:sub-packages ,(list "./cmd/server")
+       #:ldflags `("-X" ,(string-append "main.Version=" ,version))
+       #:install-source? #f
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'install 'rename-binary
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (old (string-append out "/bin/server"))
+                    (new (string-append out "/bin/cli-proxy-api")))
+               (when (file-exists? old)
+                 (rename-file old new))
+               #t))))))
+    (home-page "https://github.com/router-for-me/CLIProxyAPI")
+    (synopsis "Unified proxy for OpenAI, Anthropic, Gemini and OpenRouter APIs")
+    (description
+     "CLIProxyAPI is a lightweight, blazing-fast proxy server that provides
+a unified OpenAI-compatible interface to seamlessly route requests across
+multiple AI providers including OpenAI, Anthropic Claude, Google Gemini,
+and OpenRouter.")
+    (license license:expat)))
