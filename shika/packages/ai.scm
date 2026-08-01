@@ -80,16 +80,15 @@ exec ~a.real \"$@\"~%"
 (define-public claude-code-bin
   (package
     (name "claude-code-bin")
-    (version "2.1.202")
+    (version "2.1.220")
     (source
      (origin
        (method url-fetch)
        (uri (string-append
-             "https://storage.googleapis.com/claude-code-dist-"
-             "86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/"
+             "https://downloads.claude.ai/claude-code-releases/"
              version "/linux-x64/claude"))
        (sha256
-        (base32 "0ff8a9ms2jxxlpwx7aza560lpw1iz1kvimgc0lwdp4lq4h104nbi"))))
+        (base32 "0qy8i4m996w1952qiwmynmw05dy46r60w87r1h8g61pk1zr62kv7"))))
     (build-system binary-build-system)
     (supported-systems '("x86_64-linux"))
     (properties '((substitutable? . #f)))
