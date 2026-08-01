@@ -9,5 +9,6 @@
 (define-public fastfetch-no-zfs
   (shika-override fastfetch-minimal
                   #:name "fastfetch-no-zfs"
+                  #:commit (package-version fastfetch-minimal)
                   #:inputs (delete "zfs" (package-inputs fastfetch))))
 fastfetch-no-zfs
