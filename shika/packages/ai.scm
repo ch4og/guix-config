@@ -73,3 +73,73 @@ exec ~a.real \"$@\"~%"
     (synopsis "the open source AI coding agent.")
     (description "OpenCode is an open source agent that helps you write code in your terminal.")
     (license license:expat)))
+
+(define-public claude-code-bin
+  (package
+    (name "claude-code-bin")
+    (version "2.1.202")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://storage.googleapis.com/claude-code-dist-"
+             "86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/"
+             version "/linux-x64/claude"))
+       (sha256
+        (base32 "0ff8a9ms2jxxlpwx7aza560lpw1iz1kvimgc0lwdp4lq4h104nbi"))))
+    (build-system binary-build-system)
+    (supported-systems '("x86_64-linux"))
+    (properties '((substitutable? . #f)))
+    (arguments
+     (list
+      #:patchelf-plan #~'()
+      #:strip-binaries? #f
+      #:validate-runpath? #f
+      #:phases
+      #~(modify-phases %standard-phases
+          (replace 'unpack
+            (lambda* (#:key inputs #:allow-other-keys)
+              (copy-file (assoc-ref inputs "source") "claude")
+              (chmod "claude" #o755)))
+          (add-after 'install 'patch-and-wrap
+            (lambda* (#:key inputs outputs #:allow-other-keys)
+              (let* ((out (assoc-ref outputs "out"))
+                     (bin (string-append out "/bin"))
+                     (orig (string-append out "/claude"))
+                     (patchelf (search-input-file inputs "bin/patchelf"))
+                     (sed (search-input-file inputs "bin/sed"))
+                     (ld.so (search-input-file inputs "lib/ld-linux-x86-64.so.2"))
+                     (libpath (string-join
+                               (list (string-append (assoc-ref inputs "gcc") "/lib")
+                                     (string-append (assoc-ref inputs "glibc") "/lib"))
+                               ":")))
+                ;; Patch /proc/self/exe for Bun module resolution
+                (invoke sed "-i" "s|/proc/self/exe|/proc/self/ex_|g" orig)
+                ;; Only patch interpreter; full patchelf corrupts this binary.
+                (invoke patchelf "--set-interpreter" ld.so orig)
+                (rename-file orig (string-append orig ".real"))
+                (mkdir-p bin)
+                (call-with-output-file (string-append bin "/claude")
+                  (lambda (port)
+                    (format port "#!~a
+export DISABLE_AUTOUPDATER=1
+export DISABLE_INSTALLATION_CHECKS=1
+export LD_LIBRARY_PATH=~a${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
+exec ~a.real \"$@\"~%"
+                            #$(file-append bash-minimal "/bin/sh")
+                            libpath
+                            orig)))
+                (chmod (string-append bin "/claude") #o755)))))))
+    (native-inputs (list patchelf sed))
+    (inputs (list bash-minimal
+                  `(,gcc "lib")
+                  glibc))
+    (home-page "https://claude.ai/code")
+    (synopsis "AI coding agent for the terminal")
+    (description
+     "Claude Code is an agentic coding tool that lives in your terminal.
+It can understand your codebase, edit files, run terminal commands, and
+handle entire workflows.  This package disables auto-updates.")
+    (license
+     (nonlicense:nonfree
+      "https://code.claude.com/docs/en/legal-and-compliance"))))
