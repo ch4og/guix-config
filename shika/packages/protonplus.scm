@@ -68,7 +68,7 @@ It works with Steam, Lutris, Heroic Games Launcher and Bottles. It uses GTK4.")
                      (new-home "$HOME/.local/share/guix-sandbox-home/")
                      (prefix (string-append "${GUIX_SANDBOX_HOME:-" new-home "}")))
                 (wrap-program bin
-                  `("HOME" = (,(prefix)))
+                  `("HOME" = (,prefix))
                   `("XDG_DATA_HOME" = (,(string-append prefix "/.local/share")))
                   `("XDG_CONFIG_HOME" = (,(string-append prefix "/.config"))))))))))
     (synopsis "Simple Wine and Proton-based compatibility tools manager.
