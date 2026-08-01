@@ -10,6 +10,7 @@
   #:use-module (gnu packages audio)
   #:use-module (gnu packages base)
   #:use-module (gnu packages commencement)
+  #:use-module (gnu packages build-tools)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
   #:use-module (gnu packages freedesktop)
@@ -17,11 +18,18 @@
   #:use-module (gnu packages glib)
   #:use-module (gnu packages icu4c)
   #:use-module (gnu packages instrumentation)
+  #:use-module (gnu packages kde-frameworks)
+  #:use-module (gnu packages kde-plasma)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages qt)
   #:use-module (gnu packages tls)
+  #:use-module (gnu packages video)
   #:use-module (gnu packages vulkan)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
+  #:use-module (guix git-download)
+  #:use-module (guix build-system qt)
   #:use-module (shika packages opentabletdriver)
   #:use-module ((guix licenses) #:prefix license:))
 
@@ -144,4 +152,64 @@
 – iteration of the osu! game client which marks the beginning of an open era!
 Currently known by and released under the release codename lazer. As in
 sharper than cutting-edge.")
+    (license license:expat)))
+
+(define-public tosu-overlay
+  (package
+    (name "tosu-overlay")
+    (version "2.1.1")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+              (url "https://github.com/K4zoku/tosu-overlay-qt")
+              (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0my6227haxrna960ks8d3rywlcjdj74dmd239pd0x3dzaz892dmm"))))
+    (build-system qt-build-system)
+    (native-inputs (list meson ninja pkg-config))
+    (inputs (list layer-shell-qt
+                  ffmpeg-6
+                  kwindowsystem
+                  mesa
+                  qtbase
+                  qtwayland
+                  qtwebengine
+                  vulkan-loader))
+    (arguments
+     (list
+      #:tests? #f
+      #:qtbase qtbase
+      #:phases
+      #~(modify-phases %standard-phases
+          (replace 'configure
+            (lambda* (#:key outputs #:allow-other-keys)
+              (invoke "meson" "setup" "build"
+                      (string-append "--prefix=" (assoc-ref outputs "out"))
+                      "-Duse_qt6=true")))
+          (replace 'build
+            (lambda _
+              (invoke "meson" "compile" "-C" "build")))
+          (replace 'install
+            (lambda _
+              (invoke "meson" "install" "-C" "build")))
+          (add-after 'qt-wrap 'wrap-qt-deps
+            (lambda* (#:key outputs #:allow-other-keys)
+              (let ((bin (string-append (assoc-ref outputs "out") "/bin/tosu-overlay")))
+                (wrap-program bin
+                  `("QT_QPA_PLATFORM_PLUGIN_PATH" prefix
+                    (,(string-append #$(this-package-input "qtwayland")
+                                    "/lib/qt6/plugins/platforms")))
+                  `("QT_PLUGIN_PATH" prefix
+                    (,(string-append #$(this-package-input "kwindowsystem")
+                                    "/lib/qt6/plugins")))
+                  `("LD_LIBRARY_PATH" prefix
+                    (,(string-append #$(this-package-input "mesa") "/lib")
+                     ,(string-append #$(this-package-input "vulkan-loader") "/lib"))))))))))
+    (home-page "https://github.com/K4zoku/tosu-overlay-qt")
+    (synopsis "Tosu overlay client for Linux")
+    (description
+     "Tosu Overlay Linux is a transparent Qt-based overlay application for osu!,
+powered by Tosu and Qt WebEngine.")
     (license license:expat)))
