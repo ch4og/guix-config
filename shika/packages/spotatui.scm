@@ -6,6 +6,7 @@
   #:use-module (guix gexp)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages llvm)
   #:use-module (gnu packages rust)
   #:use-module (gnu packages tls)
   #:use-module (guix git-download)
@@ -28,19 +29,36 @@
        (sha256
         (base32 "0nf4jdx8c1y48h7arj6irabpzxsmpbakm5lc0p4856mmjid17n0x"))))
     (build-system cargo-build-system)
-    (native-inputs (list pkg-config))
+    (native-inputs (list clang
+                         pkg-config))
     (inputs (cons* openssl
                    alsa-lib
+                   pipewire
                    (shika-cargo-inputs 'spotatui)))
     (arguments
      (list
+      #:cargo-build-flags
+      ''("--release"
+         "--no-default-features"
+         "--features"
+         "discord-rpc,mpris,streaming,telemetry,audio-viz")
+      #:install-source? #f
       #:phases
       #~(modify-phases %standard-phases
+          (add-before 'build 'set-libclang-path
+            (lambda* (#:key inputs #:allow-other-keys)
+              (setenv "LIBCLANG_PATH"
+                      (string-append (assoc-ref inputs "clang") "/lib"))))
           (add-after 'unpack 'remove-patch-section
             (lambda _
               (substitute* "Cargo.toml"
                 (("\\[patch\\.crates-io\\][\\s\\S]*" _)
-                 "")))))))
+                 ""))))
+          (replace 'install
+            (lambda* (#:key outputs #:allow-other-keys)
+              (let ((bin (string-append (assoc-ref outputs "out") "/bin")))
+                (mkdir-p bin)
+                (install-file "target/release/spotatui" bin)))))))
     (home-page "https://github.com/LargeModGames/spotatui")
     (synopsis
      "A Spotify client for the terminal written in Rust, powered by Ratatui.")
