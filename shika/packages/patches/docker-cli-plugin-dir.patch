@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2003-2026 Eelco Dolstra and the Nixpkgs/NixOS contributors
+# SPDX-License-Identifier: MIT
+This patch is based on patch from NixOS/nixpkgs
+pkgs/applications/virtualization/docker/cli-system-plugin-dir-from-env-25.patch
+
+diff --git a/cli-plugins/manager/manager_unix.go b/cli-plugins/manager/manager_unix.go
+index 000c058df0..246c427cba 100644
+--- a/cli-plugins/manager/manager_unix.go
++++ b/cli-plugins/manager/manager_unix.go
+@@ -2,7 +2,13 @@
+
+ package manager
+
+-var defaultSystemPluginDirs = []string{
+-	"/usr/local/lib/docker/cli-plugins", "/usr/local/libexec/docker/cli-plugins",
+-	"/usr/lib/docker/cli-plugins", "/usr/libexec/docker/cli-plugins",
++import (
++    "os"
++    "path/filepath"
++)
++
++var defaultSystemPluginDirs []string
++
++func init() {
++    defaultSystemPluginDirs = filepath.SplitList(os.Getenv("DOCKER_CLI_PLUGIN_DIRS"))
+ }

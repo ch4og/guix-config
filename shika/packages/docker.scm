@@ -2,9 +2,12 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 
 (define-module (shika packages docker)
+  #:use-module (guix gexp)
   #:use-module (guix packages)
+  #:use-module (guix build-system trivial)
   #:use-module (shika build-system nix-go)
   #:use-module (guix git-download)
+  #:use-module (gnu packages bash)
   #:use-module (gnu packages golang)
   #:use-module ((gnu packages docker) #:prefix gnu:)
   #:use-module ((guix licenses) #:prefix license:))
@@ -86,3 +89,57 @@
      "Docker Buildx is a Docker CLI plugin for extended build capabilities
 with BuildKit.")
     (license license:asl2.0)))
+
+(define docker-cli
+  (package/inherit gnu:docker-cli
+    (source
+     (origin
+       (inherit (package-source gnu:docker-cli))
+       (patches (list (local-file "patches/docker-cli-plugin-dir.patch")))))))
+
+(define-public docker-full
+  (package
+    (name "docker-full")
+    (version (package-version docker-cli))
+    (source #f)
+    (build-system trivial-build-system)
+    (inputs (list docker-cli
+                  docker-compose
+                  docker-buildx
+                  bash-minimal))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((docker-cli #$(this-package-input "docker-cli"))
+                 (compose #$(this-package-input "docker-compose"))
+                 (buildx #$(this-package-input "docker-buildx"))
+                 (cli-plugins "/libexec/docker/cli-plugins")
+                 (plugin-dirs (string-append
+                               compose cli-plugins ":"
+                               buildx cli-plugins))
+                 (wrapper (string-append #$output "/bin/docker"))
+                 (out #$output))
+            (mkdir-p out)
+            (symlink (string-append docker-cli "/etc")
+                     (string-append out "/etc"))
+            (symlink (string-append docker-cli "/share")
+                     (string-append out "/share"))
+            (mkdir-p (dirname wrapper))
+            (call-with-output-file wrapper
+              (lambda (port)
+                (format port "#!~a~%export DOCKER_CLI_PLUGIN_DIRS=~a~%exec ~a/bin/docker \"$@\"~%"
+                        #$(file-append bash-minimal "/bin/sh")
+                        plugin-dirs
+                        docker-cli)))
+            (chmod wrapper #o755)))))
+    (home-page (package-home-page docker-cli))
+    (synopsis (string-append (package-synopsis docker-cli)
+                             " with compose and buildx plugins"))
+    (description
+     (string-append
+      (package-description docker-cli)
+      "  Includes Docker Compose and Buildx CLI plugins."))
+    (license (package-license docker-cli))))
