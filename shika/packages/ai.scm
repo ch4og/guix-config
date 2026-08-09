@@ -37,6 +37,7 @@
     (arguments
      (list
       #:patchelf-plan #~'()
+      #:install-plan #~'(("opencode" "opencode"))
       #:strip-binaries? #f
       #:validate-runpath? #f
       #:phases
@@ -46,6 +47,7 @@
               (let* ((out (assoc-ref outputs "out"))
                      (bin (string-append out "/bin"))
                      (orig (string-append out "/opencode"))
+                     (real (string-append bin "/.opencode-real"))
                      (bash (search-input-file inputs "bin/bash"))
                      (patchelf (search-input-file inputs "bin/patchelf"))
                      (ld.so (search-input-file inputs "lib/ld-linux-x86-64.so.2"))
@@ -57,14 +59,14 @@
                                ":")))
                 ;; Only patch interpreter; full patchelf corrupts this binary.
                 (invoke patchelf "--set-interpreter" ld.so orig)
-                (rename-file orig (string-append orig ".real"))
                 (mkdir-p bin)
+                (rename-file orig real)
                 (call-with-output-file (string-append bin "/opencode")
                   (lambda (port)
                     (format port "#!~a
 export LD_LIBRARY_PATH=~a${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
-exec ~a.real \"$@\"~%"
-                            bash libpath orig)))
+exec ~a \"$@\"~%"
+                            bash libpath real)))
                 (chmod (string-append bin "/opencode") #o755)))))))
     (native-inputs (list patchelf))
     (inputs (list bash-minimal
