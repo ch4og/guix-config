@@ -97,6 +97,7 @@ exec ~a \"$@\"~%"
     (arguments
      (list
       #:patchelf-plan #~'()
+      #:install-plan #~'(("claude" "claude"))
       #:strip-binaries? #f
       #:validate-runpath? #f
       #:phases
@@ -110,6 +111,7 @@ exec ~a \"$@\"~%"
               (let* ((out (assoc-ref outputs "out"))
                      (bin (string-append out "/bin"))
                      (orig (string-append out "/claude"))
+                     (real (string-append bin "/.claude-real"))
                      (patchelf (search-input-file inputs "bin/patchelf"))
                      (sed (search-input-file inputs "bin/sed"))
                      (ld.so (search-input-file inputs "lib/ld-linux-x86-64.so.2"))
@@ -121,18 +123,18 @@ exec ~a \"$@\"~%"
                 (invoke sed "-i" "s|/proc/self/exe|/proc/self/ex_|g" orig)
                 ;; Only patch interpreter; full patchelf corrupts this binary.
                 (invoke patchelf "--set-interpreter" ld.so orig)
-                (rename-file orig (string-append orig ".real"))
                 (mkdir-p bin)
+                (rename-file orig real)
                 (call-with-output-file (string-append bin "/claude")
                   (lambda (port)
                     (format port "#!~a
-export DISABLE_AUTOUPDATER=1
+export DISABLE_UPDATES=1
 export DISABLE_INSTALLATION_CHECKS=1
 export LD_LIBRARY_PATH=~a${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
-exec ~a.real \"$@\"~%"
+exec ~a \"$@\"~%"
                             #$(file-append bash-minimal "/bin/sh")
                             libpath
-                            orig)))
+                            real)))
                 (chmod (string-append bin "/claude") #o755)))))))
     (native-inputs (list patchelf sed))
     (inputs (list bash-minimal
