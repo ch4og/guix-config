@@ -54,7 +54,7 @@
       (list #:validate-runpath? #f
             #:install-plan
             #~'(("usr/share/" "share/")
-                ("usr/bin/" "lib/osu/")
+                ("usr/bin/" "opt/osu/")
                 ("osu!.desktop" "share/applications/"))
             #:modules '((guix build utils)
                         (nonguix build binary-build-system)
@@ -67,14 +67,14 @@
                     (map delete-file '("usr/bin/UpdateNix"))))
                 (add-after 'install 'wrap-program
                   (lambda _
-                    (let* ((bin (string-append #$output "/lib/osu/osu!"))
+                    (let* ((bin (string-append #$output "/opt/osu/osu!"))
                            (wrapper (string-append #$output "/bin/osu!")))
                       (mkdir-p (dirname wrapper))
                       (symlink bin wrapper)
                       (wrap-program wrapper
                         `("OSU_EXTERNAL_UPDATE_PROVIDER" = ("1"))
                         `("SDL_VIDEODRIVER" = ("wayland,x11"))
-                        `("LD_LIBRARY_PATH" prefix (,(string-append #$output "/lib/osu")
+                        `("LD_LIBRARY_PATH" prefix (,(string-append #$output "/opt/osu")
                                                       ,(string-append #$(this-package-input "mesa") "/lib")
                                                       ,(string-append #$(this-package-input "vulkan-loader") "/lib")
                                                       ,(string-append #$(this-package-input "libdrm") "/lib")
@@ -93,12 +93,12 @@
                 (add-after 'wrap-program 'fix-so
                   (lambda _
                     (symlink (string-append #$(this-package-input "lttng-ust") "/lib/liblttng-ust.so")
-                             (string-append #$output "/lib/osu/liblttng-ust.so.0"))
+                             (string-append #$output "/opt/osu/liblttng-ust.so.0"))
                     (symlink (string-append #$(this-package-input "eudev") "/lib/libudev.so.1.6.3")
-                             (string-append #$output "/lib/osu/libudev.so.0"))))
+                             (string-append #$output "/opt/osu/libudev.so.0"))))
                 (add-after 'wrap-program 'patch-rpath
                   (lambda _
-                    (let ((lib-osu (string-append #$output "/lib/osu"))
+                    (let ((lib-osu (string-append #$output "/opt/osu"))
                           (zlib-lib (string-append #$(this-package-input "zlib") "/lib"))
                           (gcc-lib (string-append #$(this-package-input "gcc-toolchain") "/lib")))
                       (let ((rpath (string-join (list lib-osu zlib-lib gcc-lib) ":")))
@@ -114,7 +114,7 @@
                                   (string-append lib-osu "/osu!")))))))
                 (add-after 'patch-rpath 'make-files-executable
                   (lambda _
-                    (let* ((lib-osu (string-append #$output "/lib/osu")))
+                    (let* ((lib-osu (string-append #$output "/opt/osu")))
                       (map (lambda (file)
                              (chmod file #o555))
                            (cons* (string-append lib-osu "/osu!")
