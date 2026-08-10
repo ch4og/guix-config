@@ -4,17 +4,21 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 
 (define-module (shika packages ai)
+  #:use-module (guix build-system cargo)
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
+  #:use-module (guix utils)
   #:use-module (shika build-system nix-go)
+  #:use-module (shika utils cargo)
   #:use-module (gnu packages golang)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages elf)
   #:use-module (gnu packages gcc)
   #:use-module (gnu packages gl)
+  #:use-module (gnu packages rust)
   #:use-module (gnu packages xorg)
   #:use-module (nonguix build-system binary)
   #:use-module ((guix licenses) #:prefix license:)
@@ -188,4 +192,56 @@ handle entire workflows.  This package disables auto-updates.")
 a unified OpenAI-compatible interface to seamlessly route requests across
 multiple AI providers including OpenAI, Anthropic Claude, Google Gemini,
 and OpenRouter.")
+    (license license:expat)))
+
+(define ccusage-litellm-pricing-json
+  (let ((commit "33b9524dafd223165b44c03efa181c33e81f6c47")
+        (hash "1qa5kdbc00hijkkrynq9s4cqc5qz2pwyh2n9vy0v2ps85ylihb1k"))
+    (origin
+      (method url-fetch)
+      (uri (string-append
+            "https://raw.githubusercontent.com/BerriAI/litellm/"
+            commit
+            "/model_prices_and_context_window.json"))
+      (sha256 (base32 hash)))))
+
+(define-public ccusage
+  (package
+    (name "ccusage")
+    (version "20.0.19")
+    (source
+     (origin
+       (method git-fetch)
+       (uri
+        (git-reference
+          (url "https://github.com/ccusage/ccusage")
+          (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0grdzqac1jxx7nnzzm1rs56lpccigw0ppha5y6kb2bh9kyqd27zz"))))
+    (build-system cargo-build-system)
+    (arguments
+     (list
+      #:install-source? #f
+      #:cargo-build-flags
+      ''("--release" "--package" "ccusage" "--bin" "ccusage")
+      #:cargo-install-paths
+      ''("crates/ccusage")
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'enter-rust-workspace
+            (lambda _
+              (chdir "rust")))
+          (add-after 'enter-rust-workspace 'set-ccusage-build-environment
+            (lambda* (#:key inputs #:allow-other-keys)
+              (setenv "CCUSAGE_PRICING_JSON_PATH"
+                      #$ccusage-litellm-pricing-json))))))
+    (native-inputs (list tzdata-for-tests))
+    (inputs (shika-cargo-inputs 'ccusage))
+    (home-page "https://github.com/ccusage/ccusage")
+    (synopsis "Analyze coding agent token usage and costs")
+    (description
+     "ccusage analyzes local coding-agent session data and reports token
+usage and costs.")
     (license license:expat)))
