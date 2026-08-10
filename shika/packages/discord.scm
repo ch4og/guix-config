@@ -55,6 +55,12 @@ It implements Discord's local RPC servers for Rich Presence support.")
     (inputs (list arrpc-bun pipewire))
     (arguments
      (list #:validate-runpath? #f
+           #:imported-modules `((guix build glib-or-gtk-build-system)
+                                ,@%chromium-binary-build-system-modules)
+           #:modules '((nonguix build chromium-binary-build-system)
+                       (guix build utils)
+                       (nonguix build utils)
+                       ((guix build glib-or-gtk-build-system) #:prefix gtk:))
            #:wrapper-plan
            #~'(("opt/Equibop/equibop"
                (("nss" "/lib/nss")
@@ -112,7 +118,9 @@ It implements Discord's local RPC servers for Rich Presence support.")
                    (invoke "sed" "-i"
                            "s/^export LD_LIBRARY_PATH=.*$//"
                            (string-append #$output "/bin/equibop"))))
-               (add-after 'remove-ld-path 'wrap-venmic-libraries
+               (add-after 'remove-ld-path 'glib-or-gtk-wrap
+                 (assoc-ref gtk:%standard-phases 'glib-or-gtk-wrap))
+               (add-after 'glib-or-gtk-wrap 'wrap-venmic-libraries
                  (lambda* (#:key inputs #:allow-other-keys)
                    (wrap-program (string-append #$output "/bin/equibop")
                      `("LD_LIBRARY_PATH" ":" prefix
