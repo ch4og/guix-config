@@ -191,7 +191,7 @@ sharper than cutting-edge.")
 lazer).  It attaches to a running osu! process, reads game state from memory,
 calculates performance points, and exposes the data over HTTP and WebSockets
 for overlay clients.")
-    (license license:gpl3+)))
+    (license license:lgpl3)))
 
 (define-public tosu-overlay
   (package
