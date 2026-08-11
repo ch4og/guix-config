@@ -179,8 +179,8 @@ sharper than cutting-edge.")
           (add-after 'create-binary-wrapper 'setup
             (lambda* (#:key outputs #:allow-other-keys)
               (wrap-program
-               (string-append (assoc-ref outputs "out") "/bin/tosu")
-               `("ENABLE_AUTOUPDATE" = ("false"))))))))
+                  (string-append (assoc-ref outputs "out") "/bin/tosu")
+                `("ENABLE_AUTOUPDATE" = ("false"))))))))
     (inputs
      (list bash-minimal gcc-toolchain icu4c))
     (native-inputs (list unzip))
@@ -239,10 +239,10 @@ for overlay clients.")
                 (wrap-program bin
                   `("QT_QPA_PLATFORM_PLUGIN_PATH" prefix
                     (,(string-append #$(this-package-input "qtwayland")
-                                    "/lib/qt6/plugins/platforms")))
+                                     "/lib/qt6/plugins/platforms")))
                   `("QT_PLUGIN_PATH" prefix
                     (,(string-append #$(this-package-input "kwindowsystem")
-                                    "/lib/qt6/plugins")))
+                                     "/lib/qt6/plugins")))
                   `("LD_LIBRARY_PATH" prefix
                     (,(string-append #$(this-package-input "mesa") "/lib")
                      ,(string-append #$(this-package-input "vulkan-loader") "/lib"))))))))))
