@@ -15,14 +15,14 @@
     (name "arrpc-bun")
     (version "1.4.0")
     (source
-      (origin
-        (method url-fetch)
-        (uri (string-append "https://github.com/Creationsss/arrpc-bun/"
-                            "releases/download/"
-                            "v" version "/"
-                            "arrpc-bun-linux-x64"))
-        (sha256
-          (base32 "1cviswj5b1gack8nx5xrxmv02x49wkn65pr45g3gxpqb88kdh6yw"))))
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/Creationsss/arrpc-bun/"
+                           "releases/download/"
+                           "v" version "/"
+                           "arrpc-bun-linux-x64"))
+       (sha256
+        (base32 "1cviswj5b1gack8nx5xrxmv02x49wkn65pr45g3gxpqb88kdh6yw"))))
     ;; This binary cannot be patched.  We use Guix ld wrapping approach.
     (build-system ld-binary-build-system)
     (arguments
