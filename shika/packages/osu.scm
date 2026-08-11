@@ -231,8 +231,15 @@ for overlay clients.")
             (lambda _
               (invoke "meson" "compile" "-C" "build")))
           (replace 'install
-            (lambda _
-              (invoke "meson" "install" "-C" "build")))
+            (lambda* (#:key outputs #:allow-other-keys)
+              (invoke "meson" "install" "-C" "build")
+              (let ((desktop-file "dist/tosu-overlay.desktop")
+                    (out (assoc-ref outputs "out")))
+                (substitute* desktop-file
+                  (("/usr/bin/tosu-overlay")
+                   (string-append out "/bin/tosu-overlay")))
+                (install-file desktop-file
+                              (string-append out "/share/applications")))))
           (add-after 'qt-wrap 'wrap-qt-deps
             (lambda* (#:key outputs #:allow-other-keys)
               (let ((bin (string-append (assoc-ref outputs "out") "/bin/tosu-overlay")))
