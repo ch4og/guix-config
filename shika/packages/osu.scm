@@ -41,114 +41,114 @@
     (name "osu-lazer-bin")
     (version "2026.804.2-lazer")
     (source
-      (origin
-        (method url-fetch)
-        (uri
-          (string-append "https://github.com/ppy/osu/releases/download/"
-                         version
-                         "/osu.AppImage"))
-        (sha256
-          (base32 "0dmyikzb8a7h9m7av38rs4jjgncll8h0qn7cf5rm1bihyb5dvbyh"))))
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append "https://github.com/ppy/osu/releases/download/"
+                       version
+                       "/osu.AppImage"))
+       (sha256
+        (base32 "0dmyikzb8a7h9m7av38rs4jjgncll8h0qn7cf5rm1bihyb5dvbyh"))))
     (build-system binary-build-system)
     (arguments
-      (list #:validate-runpath? #f
-            #:install-plan
-            #~'(("usr/share/" "share/")
-                ("usr/bin/" "opt/osu/")
-                ("osu!.desktop" "share/applications/"))
-            #:modules '((guix build utils)
-                        (nonguix build binary-build-system)
-                        (ice-9 format))
-            #:phases
-            #~(modify-phases %standard-phases
-                (add-after 'binary-unpack 'remove-unused-files
-                  (lambda _
-                    (system* "7z" "x" "osu.AppImage")
-                    (map delete-file '("usr/bin/UpdateNix"))))
-                (add-after 'install 'wrap-program
-                  (lambda _
-                    (let* ((bin (string-append #$output "/opt/osu/osu!"))
-                           (wrapper (string-append #$output "/bin/osu!")))
-                      (mkdir-p (dirname wrapper))
-                      (symlink bin wrapper)
-                      (wrap-program wrapper
-                        `("OSU_EXTERNAL_UPDATE_PROVIDER" = ("1"))
-                        `("SDL_VIDEODRIVER" = ("wayland,x11"))
-                        `("LD_LIBRARY_PATH" prefix (,(string-append #$output "/opt/osu")
-                                                      ,(string-append #$(this-package-input "mesa") "/lib")
-                                                      ,(string-append #$(this-package-input "vulkan-loader") "/lib")
-                                                      ,(string-append #$(this-package-input "libdrm") "/lib")
-                                                      ,(string-append #$(this-package-input "wayland") "/lib")
-                                                      ,(string-append #$(this-package-input "libxkbcommon") "/lib")
-                                                      ,(string-append #$(this-package-input "libxcb") "/lib")
-                                                      ,(string-append #$(this-package-input "libxext") "/lib")
-                                                      ,(string-append #$(this-package-input "glib") "/lib")
-                                                      ,(string-append #$(this-package-input "icu4c") "/lib")
-                                                      ,(string-append #$(this-package-input "openssl") "/lib")
-                                                      ,(string-append #$(this-package-input "alsa-lib") "/lib")
-                                                      ,(string-append #$(this-package-input "pipewire") "/lib")
-                                                      ,(string-append #$(this-package-input "dbus") "/lib")
-                                                      ,(string-append #$(this-package-input "gcc-toolchain") "/lib")))))))
+     (list #:validate-runpath? #f
+           #:install-plan
+           #~'(("usr/share/" "share/")
+               ("usr/bin/" "opt/osu/")
+               ("osu!.desktop" "share/applications/"))
+           #:modules '((guix build utils)
+                       (nonguix build binary-build-system)
+                       (ice-9 format))
+           #:phases
+           #~(modify-phases %standard-phases
+               (add-after 'binary-unpack 'remove-unused-files
+                 (lambda _
+                   (system* "7z" "x" "osu.AppImage")
+                   (map delete-file '("usr/bin/UpdateNix"))))
+               (add-after 'install 'wrap-program
+                 (lambda _
+                   (let* ((bin (string-append #$output "/opt/osu/osu!"))
+                          (wrapper (string-append #$output "/bin/osu!")))
+                     (mkdir-p (dirname wrapper))
+                     (symlink bin wrapper)
+                     (wrap-program wrapper
+                       `("OSU_EXTERNAL_UPDATE_PROVIDER" = ("1"))
+                       `("SDL_VIDEODRIVER" = ("wayland,x11"))
+                       `("LD_LIBRARY_PATH" prefix (,(string-append #$output "/opt/osu")
+                                                   ,(string-append #$(this-package-input "mesa") "/lib")
+                                                   ,(string-append #$(this-package-input "vulkan-loader") "/lib")
+                                                   ,(string-append #$(this-package-input "libdrm") "/lib")
+                                                   ,(string-append #$(this-package-input "wayland") "/lib")
+                                                   ,(string-append #$(this-package-input "libxkbcommon") "/lib")
+                                                   ,(string-append #$(this-package-input "libxcb") "/lib")
+                                                   ,(string-append #$(this-package-input "libxext") "/lib")
+                                                   ,(string-append #$(this-package-input "glib") "/lib")
+                                                   ,(string-append #$(this-package-input "icu4c") "/lib")
+                                                   ,(string-append #$(this-package-input "openssl") "/lib")
+                                                   ,(string-append #$(this-package-input "alsa-lib") "/lib")
+                                                   ,(string-append #$(this-package-input "pipewire") "/lib")
+                                                   ,(string-append #$(this-package-input "dbus") "/lib")
+                                                   ,(string-append #$(this-package-input "gcc-toolchain") "/lib")))))))
 
-                (add-after 'wrap-program 'fix-so
-                  (lambda _
-                    (symlink (string-append #$(this-package-input "lttng-ust") "/lib/liblttng-ust.so")
-                             (string-append #$output "/opt/osu/liblttng-ust.so.0"))
-                    (symlink (string-append #$(this-package-input "eudev") "/lib/libudev.so.1.6.3")
-                             (string-append #$output "/opt/osu/libudev.so.0"))))
-                (add-after 'wrap-program 'patch-rpath
-                  (lambda _
-                    (let ((lib-osu (string-append #$output "/opt/osu"))
-                          (zlib-lib (string-append #$(this-package-input "zlib") "/lib"))
-                          (gcc-lib (string-append #$(this-package-input "gcc-toolchain") "/lib")))
-                      (let ((rpath (string-join (list lib-osu zlib-lib gcc-lib) ":")))
-                        (for-each
-                         (lambda (lib)
-                           (when (file-exists? lib)
-                             (invoke "patchelf" "--set-rpath" rpath lib)))
-                         (find-files lib-osu "\\.so"))
-                        (let ((interpreter (car (find-files #$(this-package-input "glibc")
-                                                            "ld-linux.*\\.so"))))
-                          (invoke "patchelf" "--set-interpreter" interpreter
-                                  "--set-rpath" rpath
-                                  (string-append lib-osu "/osu!")))))))
-                (add-after 'patch-rpath 'make-files-executable
-                  (lambda _
-                    (let* ((lib-osu (string-append #$output "/opt/osu")))
-                      (map (lambda (file)
-                             (chmod file #o555))
-                           (cons* (string-append lib-osu "/osu!")
-                                  (append (find-files lib-osu ".*\\.dll")
-                                          (find-files lib-osu ".*\\.so.*")))))))
-                (add-after 'make-files-executable 'install-udev-rules
-                  (lambda _
-                    (let* ((relative-rules.d "/lib/udev/rules.d")
-                           (otd-rules (string-append #$(this-package-native-input "opentabletdriver-udev-rules")
-                                                     relative-rules.d
-                                                     "/70-opentabletdriver.rules"))
-                           (rules.d (string-append #$output relative-rules.d)))
-                      (install-file otd-rules rules.d)))))))
+               (add-after 'wrap-program 'fix-so
+                 (lambda _
+                   (symlink (string-append #$(this-package-input "lttng-ust") "/lib/liblttng-ust.so")
+                            (string-append #$output "/opt/osu/liblttng-ust.so.0"))
+                   (symlink (string-append #$(this-package-input "eudev") "/lib/libudev.so.1.6.3")
+                            (string-append #$output "/opt/osu/libudev.so.0"))))
+               (add-after 'wrap-program 'patch-rpath
+                 (lambda _
+                   (let ((lib-osu (string-append #$output "/opt/osu"))
+                         (zlib-lib (string-append #$(this-package-input "zlib") "/lib"))
+                         (gcc-lib (string-append #$(this-package-input "gcc-toolchain") "/lib")))
+                     (let ((rpath (string-join (list lib-osu zlib-lib gcc-lib) ":")))
+                       (for-each
+                        (lambda (lib)
+                          (when (file-exists? lib)
+                            (invoke "patchelf" "--set-rpath" rpath lib)))
+                        (find-files lib-osu "\\.so"))
+                       (let ((interpreter (car (find-files #$(this-package-input "glibc")
+                                                           "ld-linux.*\\.so"))))
+                         (invoke "patchelf" "--set-interpreter" interpreter
+                                 "--set-rpath" rpath
+                                 (string-append lib-osu "/osu!")))))))
+               (add-after 'patch-rpath 'make-files-executable
+                 (lambda _
+                   (let* ((lib-osu (string-append #$output "/opt/osu")))
+                     (map (lambda (file)
+                            (chmod file #o555))
+                          (cons* (string-append lib-osu "/osu!")
+                                 (append (find-files lib-osu ".*\\.dll")
+                                         (find-files lib-osu ".*\\.so.*")))))))
+               (add-after 'make-files-executable 'install-udev-rules
+                 (lambda _
+                   (let* ((relative-rules.d "/lib/udev/rules.d")
+                          (otd-rules (string-append #$(this-package-native-input "opentabletdriver-udev-rules")
+                                                    relative-rules.d
+                                                    "/70-opentabletdriver.rules"))
+                          (rules.d (string-append #$output relative-rules.d)))
+                     (install-file otd-rules rules.d)))))))
     (native-inputs (list 7zip patchelf opentabletdriver-udev-rules))
     (inputs
-      (list alsa-lib
-            dbus
-            elfutils
-            eudev
-            gcc-toolchain
-            glib
-            glibc
-            icu4c
-            libdrm
-            libxcb
-            libxext
-            libxkbcommon
-            lttng-ust
-            mesa
-            openssl
-            pipewire
-            vulkan-loader
-            wayland
-            zlib))
+     (list alsa-lib
+           dbus
+           elfutils
+           eudev
+           gcc-toolchain
+           glib
+           glibc
+           icu4c
+           libdrm
+           libxcb
+           libxext
+           libxkbcommon
+           lttng-ust
+           mesa
+           openssl
+           pipewire
+           vulkan-loader
+           wayland
+           zlib))
     (home-page "https://osu.ppy.sh/")
     (synopsis "rhythm is just a *click* away!")
     (description "A free-to-win rhythm game. This is the future – and final
