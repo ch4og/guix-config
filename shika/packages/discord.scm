@@ -42,15 +42,15 @@ It implements Discord's local RPC servers for Rich Presence support.")
     (name "equibop")
     (version "3.2.1")
     (source
-      (origin
-        (method url-fetch)
-        (uri
-          (string-append "https://github.com/Equicord/Equibop/"
-                         "releases/download/"
-                         "v" version "/"
-                         name "_" version "_amd64.deb"))
-        (sha256
-          (base32 "115gifvgwj9crhik9d3bi8vmh5zxczv6rajjsllm5q2b6qz76n01"))))
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append "https://github.com/Equicord/Equibop/"
+                       "releases/download/"
+                       "v" version "/"
+                       name "_" version "_amd64.deb"))
+       (sha256
+        (base32 "115gifvgwj9crhik9d3bi8vmh5zxczv6rajjsllm5q2b6qz76n01"))))
     (build-system chromium-binary-build-system)
     (inputs (list arrpc-bun pipewire))
     (arguments
@@ -63,8 +63,8 @@ It implements Discord's local RPC servers for Rich Presence support.")
                        ((guix build glib-or-gtk-build-system) #:prefix gtk:))
            #:wrapper-plan
            #~'(("opt/Equibop/equibop"
-               (("nss" "/lib/nss")
-                ("out" "/opt/Equibop"))))
+                (("nss" "/lib/nss")
+                 ("out" "/opt/Equibop"))))
            #:phases
            #~(modify-phases %standard-phases
                (add-after 'binary-unpack 'setup-cwd
