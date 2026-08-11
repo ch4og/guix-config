@@ -7,7 +7,7 @@
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module (guix build utils)
-  #:use-module (shika build-system complex-binary)
+  #:use-module (shika build-system pkg-binary)
   #:use-module (nonguix build-system binary)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages bash)
@@ -169,12 +169,11 @@ sharper than cutting-edge.")
              version "/tosu-linux-v" version ".zip"))
        (sha256
         (base32 "0ckryhxd21fa1i01831kzlrpyk862wvmnr7sq9kpcs2cv80287qs"))))
-    (build-system complex-binary-build-system)
+    (build-system pkg-binary-build-system)
     (arguments
      (list
       #:install-plan #~'(("tosu" "bin/tosu"))
       #:wrapper-plan #~'(("bin/tosu" ".tosu-real"))
-      #:wrapper-mode 'pkg
       #:phases
       #~(modify-phases %standard-phases
           (add-after 'create-binary-wrapper 'setup
@@ -182,9 +181,9 @@ sharper than cutting-edge.")
               (wrap-program
                (string-append (assoc-ref outputs "out") "/bin/tosu")
                `("ENABLE_AUTOUPDATE" = ("false"))))))))
-    (native-inputs (list patchelf unzip))
     (inputs
      (list bash-minimal gcc-toolchain icu4c))
+    (native-inputs (list unzip))
     (home-page "https://github.com/tosuapp/tosu")
     (synopsis "Real-time memory reader and overlay host for osu!")
     (description

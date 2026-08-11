@@ -7,7 +7,7 @@
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
-  #:use-module (shika build-system complex-binary)
+  #:use-module (shika build-system ld-binary)
   #:use-module (nonguix build-system chromium-binary))
 
 (define-public arrpc-bun
@@ -24,7 +24,7 @@
         (sha256
           (base32 "1cviswj5b1gack8nx5xrxmv02x49wkn65pr45g3gxpqb88kdh6yw"))))
     ;; This binary cannot be patched.  We use Guix ld wrapping approach.
-    (build-system complex-binary-build-system)
+    (build-system ld-binary-build-system)
     (arguments
      (list #:install-plan
            #~'(("arrpc-bun-linux-x64" "bin/arrpc"))
