@@ -2,13 +2,7 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 
 (define-module (shika packages fastfetch)
-  #:use-module (guix packages)
-  #:use-module (gnu packages admin)
-  #:use-module (shika utils override))
+  #:use-module (guix deprecation))
 
-(define-public fastfetch-no-zfs
-  (shika-override fastfetch-minimal
-                  #:name "fastfetch-no-zfs"
-                  #:commit (package-version fastfetch-minimal)
-                  #:inputs (delete "zfs" (package-inputs fastfetch))))
-fastfetch-no-zfs
+(define-deprecated/public-alias fastfetch-no-zfs
+  (@ (shika packages admin) fastfetch-no-zfs))
