@@ -27,7 +27,7 @@
   (package
     (inherit mangowm-guix)
     (name "mangowm")
-    (version "0.15.4")
+    (version "0.16.1")
     (source
      (origin
        (method git-fetch)
@@ -36,11 +36,7 @@
               (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "07xa4jc51rhbjjp0qjgbwwqgg02399x02b8fngxpss9aq5z7r6bz"))))
-    (inputs (modify-inputs (package-inputs mangowm-guix)
-              (prepend pango)
-              (replace "wlroots" wlroots-0.20)
-              (replace "scenefx" scenefx-0.5)))))
+        (base32 "13a9zfd7crlpaihyxk42xcnl7fjnwajdd4j2j06f6rkjpbjgsrfj"))))))
 
 (define-public mangowm-no-xwayland
   (package
@@ -54,23 +50,6 @@
                   '("-Dxwayland=disabled")))))
     (inputs (modify-inputs (package-inputs mangowm)
               (delete "libxcb" "xcb-util-wm")))))
-
-(define scenefx-0.5
-  (package
-    (inherit scenefx)
-    (name "scenefx")
-    (version "0.5")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                     (url "https://github.com/wlrfx/scenefx")
-                     (commit version)))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "0klxy73125lp9jab8qghh4v6di91l3y2rgan4m4lhv5flwdwnj5x"))))
-    (inputs (modify-inputs (package-inputs scenefx)
-              (replace "wlroots" wlroots-0.20)))))
 
 (define-public mangobar
   (package
