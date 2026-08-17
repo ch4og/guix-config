@@ -3,16 +3,23 @@
 
 (define-module (shika packages discord)
   #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu packages gcc)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages pulseaudio)
+  #:use-module (guix build-system node)
   #:use-module (guix download)
   #:use-module (guix gexp)
+  #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (shika build-system ld-binary)
-  #:use-module (nonguix build-system chromium-binary))
+  #:use-module (shika packages bun)
+  #:use-module (shika packages discord)
+  #:use-module (nongnu packages electron))
 
-(define-public arrpc-bun
+(define-public arrpc-bun-bin
   (package
-    (name "arrpc-bun")
+    (name "arrpc-bun-bin")
     (version "1.4.0")
     (source
      (origin
@@ -23,7 +30,6 @@
                            "arrpc-bun-linux-x64"))
        (sha256
         (base32 "1cviswj5b1gack8nx5xrxmv02x49wkn65pr45g3gxpqb88kdh6yw"))))
-    ;; This binary cannot be patched.  We use Guix ld wrapping approach.
     (build-system ld-binary-build-system)
     (arguments
      (list #:install-plan
@@ -37,100 +43,138 @@ It implements Discord's local RPC servers for Rich Presence support.")
     (home-page "https://github.com/Creationsss/arrpc-bun")
     (license license:expat)))
 
+(define equibop-node-modules
+  (let ((equibop-version "3.2.1")
+        (hash "10719qjw1b6v2n0zmhhysbnypzm21kv3bi946172win0rg3my79k"))
+    (origin
+      (method url-fetch)
+      (uri
+       (string-append "https://github.com/Equicord/Equibop/"
+                      "releases/download/v" equibop-version "/"
+                      "node_modules-x64.tar.gz"))
+      (sha256 (base32 hash)))))
+
 (define-public equibop
   (package
     (name "equibop")
     (version "3.2.1")
     (source
      (origin
-       (method url-fetch)
-       (uri
-        (string-append "https://github.com/Equicord/Equibop/"
-                       "releases/download/"
-                       "v" version "/"
-                       name "_" version "_amd64.deb"))
+       (method git-fetch)
+       (uri (git-reference
+              (url "https://github.com/Equicord/Equibop")
+              (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
        (sha256
-        (base32 "115gifvgwj9crhik9d3bi8vmh5zxczv6rajjsllm5q2b6qz76n01"))))
-    (build-system chromium-binary-build-system)
-    (inputs (list arrpc-bun pipewire))
+        (base32 "0jga3n3gfn4hviqnjbygrsk83gkcwaxqbr4qx6c3xg09a2nz39ss"))))
+    (build-system node-build-system)
+    (inputs
+     (list arrpc-bun-bin
+           bash-minimal
+           electron-41
+           gcc
+           pipewire
+           pulseaudio))
+    (native-inputs
+     (list bun))
     (arguments
-     (list #:validate-runpath? #f
-           #:imported-modules `((guix build glib-or-gtk-build-system)
-                                ,@%chromium-binary-build-system-modules)
-           #:modules '((nonguix build chromium-binary-build-system)
-                       (guix build utils)
-                       (nonguix build utils)
-                       ((guix build glib-or-gtk-build-system) #:prefix gtk:))
-           #:wrapper-plan
-           #~'(("opt/Equibop/equibop"
-                (("nss" "/lib/nss")
-                 ("out" "/opt/Equibop"))))
-           #:phases
-           #~(modify-phases %standard-phases
-               (add-after 'binary-unpack 'setup-cwd
-                 (lambda _
-                   (copy-recursively "usr/" ".")
-                   (delete-file-recursively "usr")
-                   (delete-file "control.tar.xz")
-                   (substitute* '("share/applications/equibop.desktop")
-                     (("/opt/Equibop/")
-                      (string-append #$output "/bin/")))))
-               ;; Since we use prebuilt binary we should patch ASAR
-               (add-after 'setup-cwd 'disable-auto-updates
-                 (lambda _
-                   (let* ((app-asar "opt/Equibop/resources/app.asar")
-                          (sed-asar
-                           (lambda (one two)
-                             (let ((one-length (string-length one))
-                                   (two-length (string-length two)))
-                               (unless (> one-length two-length)
-                                 (error "Too long replacement: ~s -> ~s"
-                                        one two))
-                               (invoke "sed" "-i"
-                                       (string-append
-                                        "s|" one "|"
-                                        two
-                                        (make-string (- one-length two-length) #\space)
-                                        "|")
-                                       app-asar)))))
-                     (sed-asar
-                      "Et.autoUpdater.checkForUpdates().then(e=>!!e?.isUpdateAvailable)"
-                      "false")
-                     (sed-asar
-                      "await Et.autoUpdater.checkForUpdates()"
-                      "await 0"))))
-               ;; Equibop bundles arrpc-bun which will not work due to linkage.
-               (add-after 'disable-auto-updates 'replace-arrpc
-                 (lambda* (#:key inputs #:allow-other-keys)
-                   (let* ((arrpc-dir "opt/Equibop/resources/arrpc")
-                          (arrpc-lib (assoc-ref inputs "arrpc-bun"))
-                          (arrpc-bin (string-append arrpc-lib "/bin/arrpc")))
-                     (delete-file (string-append arrpc-dir "/arrpc"))
-                     (symlink arrpc-bin (string-append arrpc-dir "/arrpc")))))
-               (add-after 'install 'symlink-binary-file
-                 (lambda _
-                   (mkdir-p (string-append #$output "/bin"))
-                   (symlink (string-append #$output "/opt/Equibop/equibop")
-                            (string-append #$output "/bin/equibop"))))
-               ;; Required to make xdg-open work.  Build system sets it.
-               (add-after 'install-wrapper 'remove-ld-path
-                 (lambda _
-                   (invoke "sed" "-i"
-                           "s/^export LD_LIBRARY_PATH=.*$//"
-                           (string-append #$output "/bin/equibop"))))
-               (add-after 'remove-ld-path 'glib-or-gtk-wrap
-                 (assoc-ref gtk:%standard-phases 'glib-or-gtk-wrap))
-               (add-after 'glib-or-gtk-wrap 'wrap-venmic-libraries
-                 (lambda* (#:key inputs #:allow-other-keys)
-                   (wrap-program (string-append #$output "/bin/equibop")
-                     `("LD_LIBRARY_PATH" ":" prefix
-                       (,(string-append (assoc-ref inputs "pulseaudio") "/lib")
-                        ,(string-append (assoc-ref inputs "pipewire") "/lib")
-                        ,(string-append (assoc-ref inputs "gcc") "/lib")))))))))
+     (list
+      #:phases
+      #~(modify-phases %standard-phases
+          (delete 'configure)
+          (delete 'patch-dependencies)
+          (delete 'delete-lockfiles)
+          (delete 'check)
+          (delete 'repack)
+          (delete 'avoid-node-gyp-rebuild)
+          (add-after 'unpack 'extract-node-modules
+            (lambda _
+              (invoke "tar" "-xzf" #$equibop-node-modules)))
+          (add-after 'extract-node-modules 'patch-source
+            (lambda* (#:key inputs #:allow-other-keys)
+              (substitute*
+                  "src/main/updater.ts"
+                (("const isOutdated = .*;")
+                 "const isOutdated = false;"))
+              (let* ((arrpc (assoc-ref inputs "arrpc-bun-bin"))
+                     (arrpc-bin (string-append arrpc "/bin/arrpc")))
+                (substitute* "src/main/arrpc/index.ts"
+                  (("    if \\(platform === \\\"linux\\\"\\) \\{")
+                   (string-append
+                    "    if (platform === \"linux\") {\n"
+                    "        searchPaths.push(\"" arrpc-bin "\");"))))
+              (substitute* "scripts/build/afterPack.mjs"
+                (("    await copyArRPCBinaries.*")
+                 ""))))
+          (add-after 'patch-source 'prepare-electron-dist
+            (lambda* (#:key inputs #:allow-other-keys)
+              (let* ((electron (assoc-ref inputs "electron"))
+                     (electron-dist (string-append electron "/share/electron")))
+                (copy-recursively electron-dist "electron-dist"))
+              (invoke "chmod" "-R" "u+w" "electron-dist")))
+          (replace 'build
+            (lambda* (#:key inputs #:allow-other-keys)
+              (let* ((bun (assoc-ref inputs "bun"))
+                     (bun-bin (string-append bun "/bin/bun"))
+                     (electron (assoc-ref inputs "electron"))
+                     (electron-version
+                      (call-with-values
+                          (lambda ()
+                            (package-name->name+version
+                             (strip-store-file-name electron)))
+                        (lambda (_ version) version))))
+                (invoke bun-bin "run" "build")
+                (invoke bun-bin "run" "electron-builder"
+                        "--dir"
+                        "-c.electronDist=electron-dist"
+                        (string-append "-c.electronVersion="
+                                       electron-version)
+                        "-c.npmRebuild=false"))))
+          (replace 'install
+            (lambda* (#:key inputs #:allow-other-keys)
+              (let* ((app-asar "dist/linux-unpacked/resources/app.asar")
+                     (app-dir (string-append #$output "/lib/equibop"))
+                     (bin (string-append #$output "/bin"))
+                     (wrapper (string-append bin "/equibop"))
+                     (bash (assoc-ref inputs "bash-minimal"))
+                     (bash-bin (string-append bash "/bin/bash"))
+                     (electron (assoc-ref inputs "electron")))
+                (mkdir-p app-dir)
+                (copy-file app-asar (string-append app-dir "/app.asar"))
+                (mkdir-p bin)
+                (with-output-to-file wrapper
+                  (lambda ()
+                    (display
+                     (string-join
+                      `(,(string-append "#!" bash-bin)
+                        "flags_file=\"${XDG_CONFIG_HOME:-$HOME/.config}/equibop-flags.conf\""
+                        "[[ -f \"$flags_file\" ]] &&"
+                        "mapfile -t flags < <(grep -vE '^[[:space:]]*(#|$)' \"$flags_file\")"
+                        ,(string-append "exec \"" electron "/bin/electron\" \""
+                                        app-dir "/app.asar\" \"${flags[@]}\" \"$@\""))
+                      "\n"))))
+                (chmod wrapper #o755)
+                (let* ((share (string-append #$output "/share"))
+                       (icon-dir (string-append share "/icons/hicolor/scalable/apps"))
+                       (desktop-dir (string-append share "/applications"))
+                       (icon (string-append icon-dir "/org.equicord.equibop.svg"))
+                       (desktop (string-append desktop-dir "/equibop.desktop")))
+                  (mkdir-p icon-dir)
+                  (mkdir-p desktop-dir)
+                  (copy-file "build/icon.svg" icon)
+                  (copy-file "build/org.equicord.equibop.desktop" desktop)))))
+          (add-after 'patch-shebangs 'wrap-venmic-libraries
+            (lambda* (#:key inputs #:allow-other-keys)
+              (apply wrap-program
+                     (string-append #$output "/bin/equibop")
+                     `(("LD_LIBRARY_PATH" ":" prefix
+                        ,(map (lambda (name)
+                                (string-append (assoc-ref inputs name) "/lib"))
+                              '("pulseaudio" "pipewire" "gcc"))))))))))
     (supported-systems '("x86_64-linux"))
-    (synopsis "Custom Discord App aiming to give you better performance and improve linux support")
+    (synopsis "Custom Discord client optimized for Linux")
     (description
-     "Equibop is a custom Discord App aiming to give you better performance
-and improve linux support.  It is a fork of Vesktop.")
+     "Equibop is a custom Discord client aiming to improve performance and
+Linux support.  It is a fork of Vesktop.")
     (home-page "https://github.com/Equicord/Equibop")
     (license license:gpl3)))
