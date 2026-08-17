@@ -43,9 +43,10 @@ It implements Discord's local RPC servers for Rich Presence support.")
     (home-page "https://github.com/Creationsss/arrpc-bun")
     (license license:expat)))
 
+(define equibop-version "3.2.2")
+
 (define equibop-node-modules
-  (let ((equibop-version "3.2.1")
-        (hash "10719qjw1b6v2n0zmhhysbnypzm21kv3bi946172win0rg3my79k"))
+  (let ((hash "14k4i18xwn3ahp2p40ahi2allbwj2a8ar6rml5h9a6i30m75r29s"))
     (origin
       (method url-fetch)
       (uri
@@ -57,7 +58,7 @@ It implements Discord's local RPC servers for Rich Presence support.")
 (define-public equibop
   (package
     (name "equibop")
-    (version "3.2.1")
+    (version equibop-version)
     (source
      (origin
        (method git-fetch)
@@ -66,7 +67,7 @@ It implements Discord's local RPC servers for Rich Presence support.")
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0jga3n3gfn4hviqnjbygrsk83gkcwaxqbr4qx6c3xg09a2nz39ss"))))
+        (base32 "0fxs4x8y3imjyam58irdaqsxd35dawsis2bw7hzbx3km4fvs10ky"))))
     (build-system node-build-system)
     (inputs
      (list arrpc-bun-bin
