@@ -18,25 +18,17 @@
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages python)
   #:use-module (gnu packages xdisorg)
-  #:use-module ((guix licenses) #:prefix license:))
+  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (shika utils override))
 
 (define mangowm-guix
   (@ (gnu packages window-management) mangowm))
 
 (define-public mangowm
-  (package
-    (inherit mangowm-guix)
-    (name "mangowm")
-    (version "0.16.1")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-              (url "https://github.com/mangowm/mango")
-              (commit version)))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32 "13a9zfd7crlpaihyxk42xcnl7fjnwajdd4j2j06f6rkjpbjgsrfj"))))))
+  (shika-override mangowm-guix
+                  #:version "0.16.1"
+                  #:commit "0.16.1"
+                  #:hash "13a9zfd7crlpaihyxk42xcnl7fjnwajdd4j2j06f6rkjpbjgsrfj"))
 
 (define-public mangowm-no-xwayland
   (package
