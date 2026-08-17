@@ -16,7 +16,7 @@
 (define-public hyperheadset
   (package
     (name "hyperheadset")
-    (version "1.9.1")
+    (version "1.10.0")
     (source
      (origin
        (method git-fetch)
@@ -26,11 +26,12 @@
               (recursive? #t)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "160p7hfshl4w98qd0ks3awd6fsxj99nwlwpa8fz2cirw8nmfpvac"))))
+        (base32 "0y3v6qfppa5qz7aa7y6swpm9r8xc56v8ldv8y3zw8h3hzbsm2x98"))))
     (build-system cargo-build-system)
     (arguments
      (list
       #:install-source? #f
+      #:features ''("eq-editor")
       #:phases
       #~(modify-phases %standard-phases
           (add-after 'install 'install-extras
