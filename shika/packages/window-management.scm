@@ -32,6 +32,19 @@
               (replace "wlroots" wlroots-0.20)
               (replace "scenefx" scenefx-0.5)))))
 
+(define-public mangowm-no-xwayland
+  (package
+    (inherit mangowm)
+    (name "mangowm-no-xwayland")
+    (arguments
+     (substitute-keyword-arguments (package-arguments mangowm)
+       ((#:configure-flags original-flags
+         #~(list))
+        #~(append #$original-flags
+                  '("-Dxwayland=disabled")))))
+    (inputs (modify-inputs (package-inputs mangowm)
+              (delete "libxcb" "xcb-util-wm")))))
+
 (define scenefx-0.5
   (package
     (inherit scenefx)
