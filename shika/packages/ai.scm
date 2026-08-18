@@ -118,11 +118,7 @@ exec ~a \"$@\"~%"
                      (real (string-append bin "/.claude-real"))
                      (patchelf (search-input-file inputs "bin/patchelf"))
                      (sed (search-input-file inputs "bin/sed"))
-                     (ld.so (search-input-file inputs "lib/ld-linux-x86-64.so.2"))
-                     (libpath (string-join
-                               (list (string-append (assoc-ref inputs "gcc") "/lib")
-                                     (string-append (assoc-ref inputs "glibc") "/lib"))
-                               ":")))
+                     (ld.so (search-input-file inputs "lib/ld-linux-x86-64.so.2")))
                 ;; Patch /proc/self/exe for Bun module resolution
                 (invoke sed "-i" "s|/proc/self/exe|/proc/self/ex_|g" orig)
                 ;; Only patch interpreter; full patchelf corrupts this binary.
@@ -134,15 +130,13 @@ exec ~a \"$@\"~%"
                     (format port "#!~a
 export DISABLE_UPDATES=1
 export DISABLE_INSTALLATION_CHECKS=1
-export LD_LIBRARY_PATH=~a${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH
-exec ~a \"$@\"~%"
+unset LD_LIBRARY_PATH
+exec -a \"$0\" ~a \"$@\"~%"
                             #$(file-append bash-minimal "/bin/sh")
-                            libpath
                             real)))
                 (chmod (string-append bin "/claude") #o755)))))))
     (native-inputs (list patchelf sed))
     (inputs (list bash-minimal
-                  `(,gcc "lib")
                   glibc))
     (home-page "https://claude.ai/code")
     (synopsis "AI coding agent for the terminal")
