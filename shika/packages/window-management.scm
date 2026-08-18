@@ -2,6 +2,7 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 
 (define-module (shika packages window-management)
+  #:use-module (guix base32)
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix gexp)
@@ -18,17 +19,23 @@
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages python)
   #:use-module (gnu packages xdisorg)
-  #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (shika utils override))
-
-(define mangowm-guix
-  (@ (gnu packages window-management) mangowm))
+  #:use-module ((guix licenses) #:prefix license:))
 
 (define-public mangowm
-  (shika-override mangowm-guix
-                  #:version "0.16.1"
-                  #:commit "0.16.1"
-                  #:hash "13a9zfd7crlpaihyxk42xcnl7fjnwajdd4j2j06f6rkjpbjgsrfj"))
+  (let ((base (@ (gnu packages window-management) mangowm))
+        (version "0.16.1"))
+    (package/inherit base
+      (version version)
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+                (url "https://github.com/mangowm/mango")
+                (commit version)))
+         (file-name (git-file-name "mangowm" version))
+         (sha256
+          (base32
+           "13a9zfd7crlpaihyxk42xcnl7fjnwajdd4j2j06f6rkjpbjgsrfj")))))))
 
 (define-public mangowm-no-xwayland
   (package

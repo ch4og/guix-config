@@ -4,17 +4,14 @@
 (define-module (shika packages admin)
   #:use-module (guix gexp)
   #:use-module (guix packages)
-  #:use-module (guix utils)
   #:use-module (gnu packages admin)
-  #:use-module (gnu packages gl)
-  #:use-module (shika utils override))
+  #:use-module (gnu packages gl))
 
 (define-public fastfetch-no-zfs
-  (shika-override fastfetch-minimal
-                  #:name "fastfetch-no-zfs"
-                  #:commit (package-version fastfetch-minimal)
-                  #:inputs (modify-inputs (package-inputs fastfetch)
-                             (delete "zfs"))))
+  (package/inherit fastfetch-minimal
+    (name "fastfetch-no-zfs")
+    (inputs (modify-inputs (package-inputs fastfetch)
+              (delete "zfs")))))
 
 (define-public btop-nvidia
   (package

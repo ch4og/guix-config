@@ -2,6 +2,7 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 
 (define-module (shika packages gamescope)
+  #:use-module (guix base32)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix packages)
@@ -23,7 +24,6 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
   #:use-module (shika packages reshade)
-  #:use-module (shika utils override)
   #:use-module ((guix licenses) #:prefix license:))
 
 (define vkroots-valve
@@ -49,29 +49,54 @@ complexity/hastle away from you! It's so simple!")
       (license (list license:asl2.0 license:expat)))))
 
 (define wlroots-for-gamescope
-  (shika-override wlroots
-                      #:version "0.18.0"
-                      #:commit "54e844748029d4874e14d0c086d50092c04c8899"
-                      #:url "https://github.com/misyltoad/wlroots"
-                      #:hash
-                      "0sxgs157nzm6bkfyzh4dnl9zajg2bq1m1kq09xpxi2lm8ran3g05"
-                      #:home-page "https://github.com/misyltoad/wlroots"))
+  (let ((commit "54e844748029d4874e14d0c086d50092c04c8899")
+        (version "0.18.0"))
+    (package/inherit wlroots
+      (version version)
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+                (url "https://github.com/misyltoad/wlroots")
+                (commit commit)))
+         (file-name (git-file-name "wlroots" version))
+         (sha256
+          (base32
+           "0sxgs157nzm6bkfyzh4dnl9zajg2bq1m1kq09xpxi2lm8ran3g05"))))
+      (home-page "https://github.com/misyltoad/wlroots"))))
 
 (define reshade-for-gamescope
-  (shika-override reshade
-                      #:version "6.1.1"
-                      #:commit "696b14cd6006ae9ca174e6164450619ace043283"
-                      #:url "https://github.com/misyltoad/reshade"
-                      #:hash
-                      "1zvhf3pgd8bhn8bynrsh725xn1dszsf05j8c9g6zabgv7vnz04a5"
-                      #:home-page "https://github.com/misyltoad/reshade"))
+  (let ((commit "696b14cd6006ae9ca174e6164450619ace043283")
+        (version "6.1.1"))
+    (package/inherit reshade
+      (version version)
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+                (url "https://github.com/misyltoad/reshade")
+                (commit commit)))
+         (file-name (git-file-name "reshade" version))
+         (sha256
+          (base32
+           "1zvhf3pgd8bhn8bynrsh725xn1dszsf05j8c9g6zabgv7vnz04a5"))))
+      (home-page "https://github.com/misyltoad/reshade"))))
 
 (define libliftoff-for-gamescope
-  (shika-override libliftoff
-                      #:version "0.5.0"
-                      #:commit "8b08dc1c14fd019cc90ddabe34ad16596b0691f4"
-                      #:hash
-                      "163g8ndsbma7acy2k9mrnvlpb7yi4431hgkx1gygkafgwpq1ii1x"))
+  (let ((commit "8b08dc1c14fd019cc90ddabe34ad16596b0691f4")
+        (version "0.5.0"))
+    (package/inherit libliftoff
+      (version version)
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+                (url "https://gitlab.freedesktop.org/emersion/libliftoff")
+                (commit commit)))
+         (file-name (git-file-name "libliftoff" version))
+         (sha256
+          (base32
+           "163g8ndsbma7acy2k9mrnvlpb7yi4431hgkx1gygkafgwpq1ii1x")))))))
 
 (define-public gamescope
   (package
