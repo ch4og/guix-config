@@ -86,7 +86,7 @@ exec ~a \"$@\"~%"
 (define-public claude-code-bin
   (package
     (name "claude-code-bin")
-    (version "2.1.226")
+    (version "2.1.234")
     (source
      (origin
        (method url-fetch)
@@ -94,7 +94,7 @@ exec ~a \"$@\"~%"
              "https://downloads.claude.ai/claude-code-releases/"
              version "/linux-x64/claude"))
        (sha256
-        (base32 "0mamln3fgfywb960kp98lh6yf1a1q85732wqppl915nffw8yr6sf"))))
+        (base32 "0jn8fm3j0wv9rc7lb5g979rbykybsi22h82vkivbzmcmlqg60wrl"))))
     (build-system binary-build-system)
     (supported-systems '("x86_64-linux"))
     (properties '((substitutable? . #f)))
