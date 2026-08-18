@@ -15,7 +15,7 @@
 (define-public wakatime-cli
   (package
     (name "wakatime-cli")
-    (version "2.21.2")
+    (version "2.24.4")
     (source
      (origin
        (method git-fetch)
@@ -24,11 +24,11 @@
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1zav3y2940mkr3yli86yik6kk8iq0w6q4y0vw3vkyfzpy04mmdis"))))
+        (base32 "0inc5md4dqv76h42bf2hgmygv26m7iwv342wxwbmsm7gidvragaj"))))
     (build-system nix-go-build-system)
     (native-inputs (list bats execline perl python))
     (arguments
-     `(#:vendor-hash "0vxrk1hfmxg4kfqslss83xbxrd7nmivzgdpanqbmy157gz029mqq"
+     `(#:vendor-hash "1s8xrh93r71c0jcsz74dbzfdpz40q9nsja1ri0kb7gjkkp0241m5"
        #:go ,go-1.26
        #:ldflags `("-X" ,(string-append "github.com/wakatime/wakatime-cli"
                                         "/pkg/version.Version=" ,version))))
@@ -37,5 +37,3 @@
     (description
      "Command line interface to WakaTime used by all WakaTime text editor plugins.")
     (license license:bsd-3)))
-
-wakatime-cli
