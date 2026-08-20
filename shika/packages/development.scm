@@ -140,6 +140,3 @@
     (description "Bun is a fast all-in-one JavaScript toolkit that provides
 a runtime, bundler, test runner, and package manager.")
     (license license:expat)))
-
-(define-public bun
-  (package-with-alias "bun" bun-bin))

@@ -6,6 +6,3 @@
 
 (define-deprecated/public-alias bun-bin
   (@ (shika packages development) bun-bin))
-
-(define-deprecated/public-alias bun
-  (@ (shika packages development) bun))

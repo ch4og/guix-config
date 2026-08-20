@@ -13,7 +13,7 @@
   #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (shika build-system ld-binary)
-  #:use-module (shika packages bun)
+  #:use-module (shika packages development)
   #:use-module (shika packages discord)
   #:use-module (nongnu packages electron))
 
@@ -77,7 +77,7 @@ It implements Discord's local RPC servers for Rich Presence support.")
            pipewire
            pulseaudio))
     (native-inputs
-     (list bun))
+     (list bun-bin))
     (arguments
      (list
       #:phases
@@ -115,7 +115,7 @@ It implements Discord's local RPC servers for Rich Presence support.")
               (invoke "chmod" "-R" "u+w" "electron-dist")))
           (replace 'build
             (lambda* (#:key inputs #:allow-other-keys)
-              (let* ((bun (assoc-ref inputs "bun"))
+              (let* ((bun (assoc-ref inputs "bun-bin"))
                      (bun-bin (string-append bun "/bin/bun"))
                      (electron (assoc-ref inputs "electron"))
                      (electron-version
