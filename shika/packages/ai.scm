@@ -86,15 +86,15 @@ exec ~a \"$@\"~%"
 (define-public claude-code-bin
   (package
     (name "claude-code-bin")
-    (version "2.1.234")
+    (version "2.1.238")
     (source
      (origin
        (method url-fetch)
        (uri (string-append
-             "https://downloads.claude.ai/claude-code-releases/"
-             version "/linux-x64/claude"))
+             "https://github.com/anthropics/claude-code/releases/download/v"
+             version "/claude-linux-x64.tar.gz"))
        (sha256
-        (base32 "0jn8fm3j0wv9rc7lb5g979rbykybsi22h82vkivbzmcmlqg60wrl"))))
+        (base32 "1474kkvjbkbrhbcxzldddmmmdaaa7gwv7k17ry976hm4al04010m"))))
     (build-system binary-build-system)
     (supported-systems '("x86_64-linux"))
     (properties '((substitutable? . #f)))
@@ -106,10 +106,6 @@ exec ~a \"$@\"~%"
       #:validate-runpath? #f
       #:phases
       #~(modify-phases %standard-phases
-          (replace 'unpack
-            (lambda* (#:key inputs #:allow-other-keys)
-              (copy-file (assoc-ref inputs "source") "claude")
-              (chmod "claude" #o755)))
           (add-after 'install 'patch-and-wrap
             (lambda* (#:key inputs outputs #:allow-other-keys)
               (let* ((out (assoc-ref outputs "out"))
