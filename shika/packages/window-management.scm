@@ -12,7 +12,7 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages gtk)
-  #:use-module (gnu packages window-management)
+  #:use-module ((gnu packages window-management) #:prefix gnu:)
   #:use-module (gnu packages javascript)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages pkg-config)
@@ -22,20 +22,18 @@
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public mangowm
-  (let ((base (@ (gnu packages window-management) mangowm))
-        (version "0.16.1"))
-    (package/inherit base
-      (version version)
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-                (url "https://github.com/mangowm/mango")
-                (commit version)))
-         (file-name (git-file-name "mangowm" version))
-         (sha256
+  (package/inherit gnu:mangowm
+    (version "0.16.1")
+    (source
+      (origin
+        (method git-fetch)
+        (uri (git-reference
+               (url "https://github.com/mangowm/mango")
+               (commit version)))
+        (file-name (git-file-name "mangowm" version))
+        (sha256
           (base32
-           "13a9zfd7crlpaihyxk42xcnl7fjnwajdd4j2j06f6rkjpbjgsrfj")))))))
+            "13a9zfd7crlpaihyxk42xcnl7fjnwajdd4j2j06f6rkjpbjgsrfj"))))))
 
 (define-public mangowm-no-xwayland
   (package
