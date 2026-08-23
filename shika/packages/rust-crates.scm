@@ -87,7 +87,6 @@
                 "0hvxc447bsynyhzhmznw6w2kwbid83p712dls4h1x8w3pavp4xgd"))
 
 (define rust-alsa-sys-0.3.1
-  ;; TODO: Check bundled sources.
   (crate-source "alsa-sys" "0.3.1"
                 "09qmmnpmlcj23zcgx2xsi4phcgm5i02g9xaf801y7i067mkfx3yv"))
 
@@ -284,7 +283,6 @@
                 "0jw2n5xln62px4dh0hxdzbkbfraznkjakwznwhxrjbh72c9646r4"))
 
 (define rust-atk-sys-0.18.2
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "atk-sys" "0.18.2"
                 "11nh2h3g7s772wb6lmjdsjbwi8rf9i11gvyyp8mpv9qc9dl8pr65"))
 
@@ -333,12 +331,10 @@
                 "17nx79a6wyx6xx5kj0f09vr0wh1q4agwjxqy6w6swfwwhz62sayf"))
 
 (define rust-aws-lc-sys-0.43.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "aws-lc-sys" "0.43.0"
                 "0k12q9axgpzhqj5q5ics2m302fnbr4pp4pipi9kn5zknril32423"))
 
 (define rust-aws-lc-sys-0.44.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "aws-lc-sys" "0.44.0"
                 "10vlwayxyylnn4vs57xs0iy0rp76k50v7zbabkh78cdvx1xsx7zh"))
 
@@ -643,7 +639,6 @@
                 "1b9x9agg67xq5nq879z66ni4l08m6m3hqcshk37d4is4ysd3ngvp"))
 
 (define rust-clang-sys-1.8.1
-  ;; TODO: Check bundled sources.
   (crate-source "clang-sys" "1.8.1"
                 "1x1r9yqss76z8xwpdanw313ss6fniwc1r7dzb5ycjn0ph53kj0hb"))
 
@@ -666,10 +661,6 @@
 (define rust-clap-4.6.3
   (crate-source "clap" "4.6.3"
                 "0xnp40g68nnzzbsjq4zzskk4kjd58rh7k8dlnygrk04rh5jrbf8g"))
-
-(define rust-clap-4.6.4
-  (crate-source "clap" "4.6.4"
-                "1dz5brl39xchkml0khm348i87w89misprlinmnk77vwjawa0q7nr"))
 
 (define rust-clap-4.6.6
   (crate-source "clap" "4.6.6"
@@ -844,7 +835,6 @@
                 "13zvbbj07yk3b61b8fhwfzhy35535a583irf23vlcg59j7h9bqci"))
 
 (define rust-core-foundation-sys-0.8.7
-  ;; TODO: Check bundled sources.
   (crate-source "core-foundation-sys" "0.8.7"
                 "12w8j73lazxmr1z0h98hf3z623kl8ms7g07jch7n4p8f9nwlhdkp"))
 
@@ -1125,17 +1115,14 @@
                 "0knfikii29761g22pwfrb8d0nqpbgw77sni9h2224haisyaams63"))
 
 (define rust-dirs-sys-0.3.7
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "dirs-sys" "0.3.7"
                 "19md1cnkazham8a6kh22v12d8hh3raqahfk6yb043vrjr68is78v"))
 
 (define rust-dirs-sys-0.4.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "dirs-sys" "0.4.1"
                 "071jy0pvaad9lsa6mzawxrh7cmr7hsmsdxwzm7jzldfkrfjha3sj"))
 
 (define rust-dirs-sys-0.5.0
-  ;; TODO: Check bundled sources.
   (crate-source "dirs-sys" "0.5.0"
                 "1aqzpgq6ampza6v012gm2dppx9k35cdycbj54808ksbys9k366p0"))
 
@@ -1475,10 +1462,6 @@
   (crate-source "foreign-types" "0.5.0"
                 "0rfr2zfxnx9rz3292z5nyk8qs2iirznn5ff3rd4vgdwza6mdjdyp"))
 
-(define rust-foreign-types-macros-0.2.3
-  (crate-source "foreign-types-macros" "0.2.3"
-                "0hjpii8ny6l7h7jpns2cp9589016l8mlrpaigcnayjn9bdc6qp0s"))
-
 (define rust-foreign-types-macros-0.2.4
   (crate-source "foreign-types-macros" "0.2.4"
                 "09aj8wl64pqvm6ix1800khgypdhinwinxhfv7n3yn5b95qc90lga"))
@@ -1512,7 +1495,6 @@
                 "075i25z70j2mz9r7i9p9r521y8xdj81q7skslyb7zhqnnw33fw22"))
 
 (define rust-fsevent-sys-4.1.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "fsevent-sys" "4.1.0"
                 "1liz67v8b0gcs8r31vxkvm2jzgl9p14i78yfqx81c8sdv817mvkn"))
 
@@ -1641,17 +1623,14 @@
                 "0350zm38d7sf3ilnwy9fxyhajbdslvjdcm7xxlk4dn6dwcwhvfyy"))
 
 (define rust-gdk-pixbuf-sys-0.18.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gdk-pixbuf-sys" "0.18.0"
                 "1xya543c4ffd2n7aiwwrdxsyc9casdbasafi6ixcknafckm3k61z"))
 
 (define rust-gdk-pixbuf-sys-0.21.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gdk-pixbuf-sys" "0.21.5"
                 "1rqc1bv3ln6hx4a4bn3jagz75dzhmy96hkyx4lg5blm3p58av5dx"))
 
 (define rust-gdk-sys-0.18.2
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gdk-sys" "0.18.2"
                 "1xzkl9mdfsj1zja7ikrg3g8rinqsb9nqq64yc5k1xb4lhpri6baw"))
 
@@ -1660,7 +1639,6 @@
                 "1gxzhk55r0nh48ld7l1j700cc6jqh8jvvzw8bph4qjmy5chn8rbm"))
 
 (define rust-gdk4-sys-0.10.3
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gdk4-sys" "0.10.3"
                 "0d5hk2agfifnn0hgcjyb4lcrvrdlaxgkzj6w99m854gmrjrybm56"))
 
@@ -1717,12 +1695,10 @@
                 "06l1nlq5r0dvm0xmhrpgvs8ypx7jcb3vgihxwrvb8s0cc2zlizy5"))
 
 (define rust-gio-sys-0.18.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gio-sys" "0.18.1"
                 "1lip8z35iy9d184x2qwjxlbxi64q9cpayy7v1p5y9xdsa3w6smip"))
 
 (define rust-gio-sys-0.21.5
-  ;; TODO: Check bundled sources.
   (crate-source "gio-sys" "0.21.5"
                 "08hgv0lqm94hyhdisjrl52bg9699c9ibp6zzr2301r58vf4gww80"))
 
@@ -1747,12 +1723,10 @@
                 "05vzv1m4dg1cpkakxk3n1846acv4fhwhghq1zsbaca0j61svcnfg"))
 
 (define rust-glib-sys-0.18.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "glib-sys" "0.18.1"
                 "164qhsfmlzd5mhyxs8123jzbdfldwxbikfpq5cysj3lddbmy4g06"))
 
 (define rust-glib-sys-0.21.5
-  ;; TODO: Check bundled sources.
   (crate-source "glib-sys" "0.21.5"
                 "0v1ymxb51sbwv242slq21kbn8g38j2day53f52kn9r4sl6iy359d"))
 
@@ -1773,12 +1747,10 @@
                 "1dddw6wh5lm4apn1w6ikgh92w00n33pgwy6gndmwqr1k90f8w0r9"))
 
 (define rust-gobject-sys-0.18.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gobject-sys" "0.18.0"
                 "0i6fhp3m6vs3wkzyc22rk2cqj68qvgddxmpaai34l72da5xi4l08"))
 
 (define rust-gobject-sys-0.21.5
-  ;; TODO: Check bundled sources.
   (crate-source "gobject-sys" "0.21.5"
                 "157jv8ga4f7p4vrn4mmg84lrl0ly3kz9kjzkfm2qz88r1pd3bjid"))
 
@@ -1791,7 +1763,6 @@
                 "1yg23ws354622ya5qccwvf9gpjn188vhkrz1pzc3yrnvr4506c17"))
 
 (define rust-graphene-sys-0.21.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "graphene-sys" "0.21.5"
                 "14zxhk20yypksyh8kx14xf5ddhjifcmzcjh49cg29bd93q4k4pli"))
 
@@ -1804,7 +1775,6 @@
                 "0lx17acgawg9xn216lgikcdpy1lxjvhqk2q2mazcb5jqijfxwmg7"))
 
 (define rust-gsk4-sys-0.10.3
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gsk4-sys" "0.10.3"
                 "1xzlf8yidajc86cm7fcmn5br11lgdn3l242z0s1g8ihi75r19sbw"))
 
@@ -1817,7 +1787,6 @@
                 "088rh5685pqi6ikym86fv3v78hd2gsa065iv2bwwv99g59xh39rx"))
 
 (define rust-gstreamer-app-sys-0.24.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gstreamer-app-sys" "0.24.5"
                 "0p3jqi5zpadn69x3avaglw17jqakbaygv80m7iaflsjl5fqz3aag"))
 
@@ -1826,7 +1795,6 @@
                 "1pgdbbbfsynd6jxxhf5p72k5bf3lv38xd8vqsmnznaykx365ih3n"))
 
 (define rust-gstreamer-audio-sys-0.24.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gstreamer-audio-sys" "0.24.5"
                 "0bcax7ysvqaijlnpd618iy79p6591z8lzzn8v04p8kjwamplfzl0"))
 
@@ -1835,12 +1803,10 @@
                 "0wj9qw0cnnm083pb0xzgiljwwq9qnb4idj35nwbyxa1046hzjxck"))
 
 (define rust-gstreamer-base-sys-0.24.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gstreamer-base-sys" "0.24.5"
                 "0lmpcv7plfz38rgmy7d7zzhf8fkq8cb2cwdpniwh7axnb4slz10v"))
 
 (define rust-gstreamer-sys-0.24.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gstreamer-sys" "0.24.5"
                 "0n97rxdsi2dl501417gap92c1grdkxlxb2wlhs0pprcsb4d7rlxm"))
 
@@ -1849,7 +1815,6 @@
                 "0sjh12mvvcmkz54nn30lb2xrzxagshbz1x2i4xfvshpwgccznmpx"))
 
 (define rust-gtk-sys-0.18.2
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gtk-sys" "0.18.2"
                 "0524c9mwx5jxkl8pb6q45g2n1kfwajz1isa0vnvkwmar3k1a2acg"))
 
@@ -1866,7 +1831,6 @@
                 "0hiy02q0gnfqg1bj8iycb5xmgm0jz80q2psxh521551x9ahvbkrw"))
 
 (define rust-gtk4-sys-0.10.3
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "gtk4-sys" "0.10.3"
                 "1pc803r3921h44pa773qpirn3aqcrq2fibykdhb5vq8ybbz7f9c4"))
 
@@ -2175,7 +2139,6 @@
                 "1j7jkacw6cxra4jf1sbndkpkbm5qm0bvxpcms36cjghq3aaf2fqm"))
 
 (define rust-inotify-sys-0.1.8
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "inotify-sys" "0.1.8"
                 "0zgkxmqa7wlsc348166rr9np4560rflzlcvsmf8xyg0i5h5zhcy0"))
 
@@ -2264,7 +2227,6 @@
                 "09vxsi26bah35xbry9qym947k6yan3255aqlz2msypdcph3ip0gp"))
 
 (define rust-jack-sys-0.5.1
-  ;; TODO: Check bundled sources.
   (crate-source "jack-sys" "0.5.1"
                 "1aw6zishflmd5v9dz5yvpc5f9jsfm9pjjhzvdmbjp8lmkdhvf4v0"))
 
@@ -2325,12 +2287,10 @@
                 "18v02mcn5c7mb2yw6r930xg6ynsn7hwkxv8z2kdhn3qprjn0j0d0"))
 
 (define rust-jni-sys-0.3.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "jni-sys" "0.3.1"
                 "0n1j8fbz081w1igfrpc79n6vgm7h3ik34nziy5fjgq5nz7hm59j1"))
 
 (define rust-jni-sys-0.4.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "jni-sys" "0.4.1"
                 "1wlahx6f2zhczdjqyn8mk7kshb8x5vsd927sn3lvw41rrf47ldy6"))
 
@@ -2343,22 +2303,18 @@
                 "1crwgbb0wjph42ni4hqryjxlv4vlr0hyk81g76id9fpa56ysq00w"))
 
 (define rust-js-sys-0.3.103
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "js-sys" "0.3.103"
                 "00lib0b6hqmw56r2hjp7xrv730qacslirbkdlhvmi39zvgy4pd2k"))
 
 (define rust-js-sys-0.3.104
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "js-sys" "0.3.104"
                 "0fjsgady7wbv7bbyy6c8qhrd93bnx11qbl83l1g7bb9a4601030f"))
 
 (define rust-js-sys-0.3.80
-  ;; TODO: Check bundled sources.
   (crate-source "js-sys" "0.3.80"
                 "0bkhnbna0a9sqhhswfar0mzi8mpy2dygv4zbzfdbm97bqnz16bw5"))
 
 (define rust-js-sys-0.3.83
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "js-sys" "0.3.83"
                 "1n71vpxrzclly0530lwkcsx6mg73lipam2ak3rr1ypzmqw4kfjj6"))
 
@@ -2371,7 +2327,6 @@
                 "1dr6ab4k7jnk991md17mvzrkmnnmmg1sggawbmcn54qpxi8b88am"))
 
 (define rust-kernel32-sys-0.2.2
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "kernel32-sys" "0.2.2"
                 "1389av0601a9yz8dvx5zha9vmkd6ik7ax0idpb032d28555n41vm"))
 
@@ -2400,7 +2355,6 @@
                 "1sj11bbz5kx73m0bzkmwzfmmlxjnh4q94v6ya3gls2qj4idkwxld"))
 
 (define rust-kqueue-sys-1.1.2
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "kqueue-sys" "1.1.2"
                 "11xhzsgwc82g85072c6m8nimxxqkax4n40sikcsk9hks5573la87"))
 
@@ -2433,7 +2387,6 @@
                 "0js8slasp2y4zr4hqjbqpp70rk38fq59v0sw66rl4czpz0my22gv"))
 
 (define rust-libadwaita-sys-0.8.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "libadwaita-sys" "0.8.1"
                 "0c9y9azfdnbnpxvjy514fd87sdafy28j9nnazsbbazm8gci98zvd"))
 
@@ -2442,7 +2395,6 @@
                 "02nwjmm5qqbkvzbz4j1dd50xs0ywr0i2l2scwmxcqs680yb9nn03"))
 
 (define rust-libappindicator-sys-0.9.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "libappindicator-sys" "0.9.0"
                 "1bsw2mcxil3zm4zzdir76i7xnaqaq30cd9qpviccrvdb70hwb7kf"))
 
@@ -2471,12 +2423,10 @@
                 "1whjfs375vlng2q6yrbzs73cvp5lm3w1n2gfqajb2vgf7zg3xbry"))
 
 (define rust-libdbus-sys-0.2.7
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "libdbus-sys" "0.2.7"
                 "0hzhq0dz6lfzmhsym9m95cfhjzrwq74qdg85xkpg2012sj4lg31j"))
 
 (define rust-libfuzzer-sys-0.4.13
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "libfuzzer-sys" "0.4.13"
                 "1li9z5q55wi81zzyifm7a4rw1xvcclsnqsqbkbvrk86bl50jzzd9"))
 
@@ -2505,7 +2455,6 @@
                 "1myqcf36xpy6kwjzs3xnak4az36akya2n5cdyq9xzy9c3n3vw3d0"))
 
 (define rust-libmimalloc-sys-0.1.49
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "libmimalloc-sys" "0.1.49"
                 "1sdqq31sbf8dbdng8fsyzl2c5xxphn6dvr6ggik6zhg18cpsaiba"))
 
@@ -2518,12 +2467,10 @@
                 "1vygcjjfy4d1ysbdwa71xhmlfdxbdzrsl96c4d5kx3hw73qbxgmp"))
 
 (define rust-libpulse-simple-sys-1.22.0
-  ;; TODO: Check bundled sources.
   (crate-source "libpulse-simple-sys" "1.22.0"
                 "1g7fb0ksbli4323a5bzn3j3j856arhnfixdb2q6jgb9pzs46in9v"))
 
 (define rust-libpulse-sys-1.23.0
-  ;; TODO: Check bundled sources.
   (crate-source "libpulse-sys" "1.23.0"
                 "0qayl38603vlzrfb9n2p2mqn0jfpxg9225nc57w8ks92if272hyp"))
 
@@ -2593,7 +2540,6 @@
                 "0kkx5wb1s2wwl65ql76n9hyb06xy3f6z3bq40vqyfx6n56zg6299"))
 
 (define rust-libspa-sys-0.10.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "libspa-sys" "0.10.0"
                 "1nkx02mv2haxwb74vhk82ld1ykc4xjppbkzkhs282m6a9xv55bb9"))
 
@@ -2602,7 +2548,6 @@
                 "1nqlina6li1bmap0144h4hdsczyyfyinf87qvrw8xlm3as3kncq0"))
 
 (define rust-libxdo-sys-0.11.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "libxdo-sys" "0.11.0"
                 "04ljl0lmirg8a9q7w8ib2sybx35nnzpbw2xciayip0xpwbkvj8yv"))
 
@@ -2623,17 +2568,14 @@
                 "105vxk32qrs0xxmz4vx7g81n2pmhhfv8gsndp3cca25v6c629y54"))
 
 (define rust-linux-raw-sys-0.11.0
-  ;; TODO: Check bundled sources.
   (crate-source "linux-raw-sys" "0.11.0"
                 "0fghx0nn8nvbz5yzgizfcwd6ap2pislp68j8c1bwyr6sacxkq7fz"))
 
 (define rust-linux-raw-sys-0.12.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "linux-raw-sys" "0.12.1"
                 "0lwasljrqxjjfk9l2j8lyib1babh2qjlnhylqzl01nihw14nk9ij"))
 
 (define rust-linux-raw-sys-0.4.15
-  ;; TODO: Check bundled sources.
   (crate-source "linux-raw-sys" "0.4.15"
                 "1aq7r2g7786hyxhv40spzf2nhag5xbw2axxc1k8z5k1dsgdm4v6j"))
 
@@ -2694,12 +2636,10 @@
                 "0a89sspsr2g5q2mhfw5v6q1dq7qk87h049kr4hnyn9hlzdnjc3nn"))
 
 (define rust-lua-src-550.1.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "lua-src" "550.1.1"
                 "0jcrkzyckzvcb3hqlbcylvkk21ifxgry2j2lw06lxwrkzb111hbm"))
 
 (define rust-luajit-src-210.7.2+b925b3e
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "luajit-src" "210.7.2+b925b3e"
                 "19pgmmazc37fnmvysivdgfi3wh9arlr7r9gf1iapq89xn9agc34j"))
 
@@ -2812,7 +2752,6 @@
                 "1amwc6cmz757wxglf5zjdkc2bnizf0pz6x06hv4p0nfg6yhgywmd"))
 
 (define rust-mlua-sys-0.11.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "mlua-sys" "0.11.0"
                 "0ssp0ynxn5mh7vw6q3cxi1b1mfqhw1i6rkcnzrffbm06p63nf4wj"))
 
@@ -2849,7 +2788,6 @@
                 "12sai3dqsblsvfd1l1zab0z6xsnlha3xsfl7kagdnmj3an3jvc17"))
 
 (define rust-ndk-sys-0.6.0+11769913
-  ;; TODO: Check bundled sources.
   (crate-source "ndk-sys" "0.6.0+11769913"
                 "0wx8r6pji20if4xs04g73gxl98nmjrfc73z0v6w1ypv6a4qdlv7f"))
 
@@ -2970,7 +2908,6 @@
                 "0zfn67m93qfh9gyxxx1hj6yprk9dkr3hm1mi4ni23pqlj3kikqji"))
 
 (define rust-objc-sys-0.3.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "objc-sys" "0.3.5"
                 "0423gry7s3rmz8s3pzzm1zy5mdjif75g6dbzc2lf2z0c77fipffd"))
 
@@ -3155,12 +3092,10 @@
                 "1gpwpb7smfhkscwvbri8xzbab39wcnby1jgz1s49vf1aqgsdx1vw"))
 
 (define rust-openssl-src-300.6.1+3.6.3
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "openssl-src" "300.6.1+3.6.3"
                 "0iiqpjxf4g3mg3ggprrqw6lx65073966q0la1wfcwq9vzfwqzss6"))
 
 (define rust-openssl-sys-0.9.117
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "openssl-sys" "0.9.117"
                 "159nf6jsqnmsynkh6gjzx088q1ifll7v88sss8qdk363n9mpwzml"))
 
@@ -3253,12 +3188,10 @@
                 "0sgb6xls3l07f7b257rp3gjx9g6mhckhgz5pbc37l1vq41gdilaj"))
 
 (define rust-pango-sys-0.18.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "pango-sys" "0.18.0"
                 "1iaxalcaaj59cl9n10svh4g50v8jrc1a36kd7n9yahx8j7ikfrs3"))
 
 (define rust-pango-sys-0.21.5
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "pango-sys" "0.21.5"
                 "1zbcw3b2i5ixzy0ds65z2xdvllifzh8m5xid7lqgzmbfsckndw5l"))
 
@@ -3399,7 +3332,6 @@
                 "0f2zd3b4zwrkan90nlaxpmv7j9y43ly2k3ivcg64rmralnlap1c5"))
 
 (define rust-pipewire-sys-0.10.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "pipewire-sys" "0.10.0"
                 "1p3af1addl3c4hdr9skr5hvs5dw6ylkkqxr50gk271slbcj9y27j"))
 
@@ -3464,7 +3396,6 @@
                 "0qnmc7amk0fzbcs985ixv0k4955f0fmpkhrl9ps9pk3cz7pvbdnd"))
 
 (define rust-portaudio-sys-0.1.1
-  ;; TODO: Check bundled sources.
   (crate-source "portaudio-sys" "0.1.1"
                 "1xdpywirpr1kqkbak7hnny62gmsc93qgc3ij3j2zskrvjpxa952i"))
 
@@ -3832,10 +3763,6 @@
   (crate-source "redox_syscall" "0.5.18"
                 "0b9n38zsxylql36vybw18if68yc9jczxmbyzdwyhb9sifmag4azd"))
 
-(define rust-redox-syscall-0.9.0
-  (crate-source "redox_syscall" "0.9.0"
-                "0nbpw2kbrxc0rcvnsn4zzibcpll6r9mqw5wf4cd03ah5m9m2l465"))
-
 (define rust-redox-syscall-0.9.2
   (crate-source "redox_syscall" "0.9.2"
                 "1zm2mqij8bw9mj1znaw8ljh6k4f8canyxazp1rn4wp9cpfjkvjgi"))
@@ -4177,7 +4104,6 @@
                 "1vzyx78fi8p9xx4m5l7fm9axrjrlpaw80bpr6rzbd2kazix40hid"))
 
 (define rust-sdl2-sys-0.38.0
-  ;; TODO: Check bundled sources.
   (crate-source "sdl2-sys" "0.38.0"
                 "1h7a4dc0jdis017lm3pgzdjrjhwnq7bf9irxr6xv1m3mzh3i9xiz"))
 
@@ -4202,12 +4128,10 @@
                 "07fd0j29j8yczb3hd430vwz784lx9knb5xwbvqna1nbkbivvrx5p"))
 
 (define rust-security-framework-sys-2.15.0
-  ;; TODO: Check bundled sources.
   (crate-source "security-framework-sys" "2.15.0"
                 "1h6mijxnfrwvl1y4dzwn3m877j6dqp9qn3g37i954j5czazhq7yc"))
 
 (define rust-security-framework-sys-2.17.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "security-framework-sys" "2.17.0"
                 "1qr0w0y9iwvmv3hwg653q1igngnc5b74xcf0679cbv23z0fnkqkc"))
 
@@ -4472,12 +4396,10 @@
                 "10s7kkypkvnx5dkxdi1vaj8vby015irvmnqh757iadhrl40rqvpn"))
 
 (define rust-sqlite3-src-0.7.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "sqlite3-src" "0.7.0"
                 "081i23jsrmzna0j2q63sb4ipz8pllnb1fhlywqrhlsw8c34d7dp5"))
 
 (define rust-sqlite3-sys-0.18.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "sqlite3-sys" "0.18.0"
                 "0fbh4rjq4kc1mx6rigap6xzl5n7skbi9wyhjh581sfn1mnbisy57"))
 
@@ -4698,7 +4620,6 @@
                 "12rwilylzc625qnxl30h5kf8wj5ka61zjrwpmb034cd0mc6ksgx1"))
 
 (define rust-system-configuration-sys-0.6.0
-  ;; TODO: Check bundled sources.
   (crate-source "system-configuration-sys" "0.6.0"
                 "1i5sqrmgy58l4704hibjbl36hclddglh73fb3wx95jnmrq81n7cf"))
 
@@ -5487,17 +5408,14 @@
                 "1j8qn606nabs6xg4hd41kfjyr4123ddmqi9n3mqrgxfiz28ap5wj"))
 
 (define rust-wayland-sys-0.31.11
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "wayland-sys" "0.31.11"
                 "1gp3hlkxx13i55lyyi794vnw9a780z3skx0xhj71zr69xwzv5snq"))
 
 (define rust-wayland-sys-0.31.7
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "wayland-sys" "0.31.7"
                 "0hk157yawv9y7aj7fxbldhlvv8p33c65v3nv85mq4m91h919p51l"))
 
 (define rust-wayland-sys-0.31.8
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "wayland-sys" "0.31.8"
                 "1zdxrcl8paklwir0lag1i80k6h0iq1f80d925b4p9yaymk1vyv8y"))
 
@@ -5522,17 +5440,14 @@
                 "0a4d6szwgj6shm674n550b6nlf7va6z46i7idb5cpmx8c32zgchn"))
 
 (define rust-web-sys-0.3.103
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "web-sys" "0.3.103"
                 "0hb1zdnrp99p5r5q66jagsddmwha460yv2wklvzrzk0b3jvdq8l6"))
 
 (define rust-web-sys-0.3.104
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "web-sys" "0.3.104"
                 "0c0acbvaqzqf21q5vdff2g74fvb7afi91xjplmclybq4d24k6df4"))
 
 (define rust-web-sys-0.3.83
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "web-sys" "0.3.83"
                 "1b1pw450ig62xr0cy1wfjlbahvmi725jl64d150j0hacfy6q4clv"))
 
@@ -5857,32 +5772,26 @@
                 "14bhng9jqv4fyl7lqjz3az7vzh8pw0w4am49fsqgcz67d67x0dvq"))
 
 (define rust-windows-sys-0.45.0
-  ;; TODO: Check bundled sources.
   (crate-source "windows-sys" "0.45.0"
                 "1l36bcqm4g89pknfp8r9rl1w4bn017q6a8qlx8viv0xjxzjkna3m"))
 
 (define rust-windows-sys-0.48.0
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "windows-sys" "0.48.0"
                 "1aan23v5gs7gya1lc46hqn9mdh8yph3fhxmhxlw36pn6pqc28zb7"))
 
 (define rust-windows-sys-0.52.0
-  ;; TODO: Check bundled sources.
   (crate-source "windows-sys" "0.52.0"
                 "0gd3v4ji88490zgb6b5mq5zgbvwv7zx1ibn8v3x83rwcdbryaar8"))
 
 (define rust-windows-sys-0.59.0
-  ;; TODO: Check bundled sources.
   (crate-source "windows-sys" "0.59.0"
                 "0fw5672ziw8b3zpmnbp9pdv1famk74f1l9fcbc3zsrzdg56vqf0y"))
 
 (define rust-windows-sys-0.60.2
-  ;; TODO: Check bundled sources.
   (crate-source "windows-sys" "0.60.2"
                 "1jrbc615ihqnhjhxplr2kw7rasrskv9wj3lr80hgfd42sbj01xgj"))
 
 (define rust-windows-sys-0.61.2
-  ;; TODO: Check bundled sources.
   (crate-source "windows-sys" "0.61.2"
                 "1z7k3y9b6b5h52kid57lvmvm05362zv1v8w0gc7xyv5xphlp44xf"))
 
@@ -6042,10 +5951,6 @@
   (crate-source "xattr" "1.6.1"
                 "0ml1mb43gqasawillql6b344m0zgq8mz0isi11wj8vbg43a5mr1j"))
 
-(define rust-xcursor-0.3.10
-  (crate-source "xcursor" "0.3.10"
-                "0awgy98awg4ydcfmynqfcwvl4bnnfcm4i2vvnk2n926a02jy9jdy"))
-
 (define rust-xcursor-0.3.11
   (crate-source "xcursor" "0.3.11"
                 "08wfv0wrij9rrmbgfd2l8a132gyfax05abypllpmwic6hznk6fqn"))
@@ -6078,10 +5983,6 @@
   (crate-source "xml-rs" "0.7.0"
                 "1hp9kf80y9qm3aiqg5psyshqfkcrjgifbcm2c2nc5qlzs80vc71w"))
 
-(define rust-xml-rs-0.8.28
-  (crate-source "xml-rs" "0.8.28"
-                "0grdj7xwbki5zrkalrg8dljyf14y4yj3wrj34sbzqp06i9zk7s1s"))
-
 (define rust-xml-rs-0.8.29
   (crate-source "xml-rs" "0.8.29"
                 "19y8s93sh2dx21bqlpagkixld2c66f3rln0j9k4k7zqxxnrgjl74"))
@@ -6091,7 +5992,6 @@
                 "0j24y2zf60lpxwd7kyg737hqfyqx16y32s0fjyi6fax6w4hlnnks"))
 
 (define rust-yeslogic-fontconfig-sys-6.0.1
-  ;; TODO REVIEW: Check bundled sources.
   (crate-source "yeslogic-fontconfig-sys" "6.0.1"
                 "0xjgmw2nh3hr6wh72s9ss41njqrkgk4p25if27zjk6ibj6zqm2qx"))
 
