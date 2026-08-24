@@ -106,10 +106,6 @@
   (crate-source "annotate-snippets" "0.11.5"
                 "1i1bmr5vy957l8fvivj9x1xs24np0k56rdgwj0bxqk45b2p8w3ki"))
 
-(define rust-ansi-term-0.12.1
-  (crate-source "ansi_term" "0.12.1"
-                "1ljmkbilxgmhavxvxqa7qvm6f3fjggi7q2l3a72q9x0cxjvrnanm"))
-
 (define rust-anstream-0.6.20
   (crate-source "anstream" "0.6.20"
                 "14k1iqdf3dx7hdjllmql0j9sjxkwr1lfdddi3adzff0r7mjn7r9s"))
@@ -301,10 +297,6 @@
 (define rust-atomic-waker-1.1.2
   (crate-source "atomic-waker" "1.1.2"
                 "1h5av1lw56m0jf0fd3bchxq8a30xv0b4wv8s4zkp4s0i7mfvs18m"))
-
-(define rust-atty-0.2.14
-  (crate-source "atty" "0.2.14"
-                "1s7yslcs6a28c5vz7jwj63lkfgyx8mx99fdirlhi9lbhhzhrpcyr"))
 
 (define rust-autocfg-1.5.0
   (crate-source "autocfg" "1.5.0"
@@ -650,10 +642,6 @@
   (crate-source "clang-sys" "1.8.1"
                 "1x1r9yqss76z8xwpdanw313ss6fniwc1r7dzb5ycjn0ph53kj0hb"))
 
-(define rust-clap-2.34.0
-  (crate-source "clap" "2.34.0"
-                "071q5d8jfwbazi6zhik9xwpacx5i6kb2vkzy060vhf0c3120aqd0"))
-
 (define rust-clap-4.5.48
   (crate-source "clap" "4.5.48"
                 "1bjz3d7bavy13ph2a6rm3c9y02ak70b195xakii7h6q2xarln4z2"))
@@ -990,10 +978,6 @@
   (crate-source "darling" "0.23.0"
                 "179fj6p6ajw4dnkrik51wjhifxwy02x5zhligyymcb905zd17bi5"))
 
-(define rust-darling-0.24.0
-  (crate-source "darling" "0.24.0"
-                "08vx6iikfg7nz88ljnvnb5rqx819ys3si2mclym7xn4hp7qhnjc8"))
-
 (define rust-darling-0.24.1
   (crate-source "darling" "0.24.1"
                 "1v625grpyqddgaslgc0kzha41vzqy91yyg80ra9vjc363f8ga5zd"))
@@ -1006,10 +990,6 @@
   (crate-source "darling_core" "0.23.0"
                 "1c033vrks38vpw8kwgd5w088dsr511kfz55n9db56prkgh7sarcq"))
 
-(define rust-darling-core-0.24.0
-  (crate-source "darling_core" "0.24.0"
-                "1i38i1vwm2a2p3knsyqd0rm7frkfil5lxqz1600ji0n4j57jfkh8"))
-
 (define rust-darling-core-0.24.1
   (crate-source "darling_core" "0.24.1"
                 "1zyxlb9ypzb3pzm0l8jy09x2kvd7x7qd50b1z0caxal5fk7y4dv8"))
@@ -1021,10 +1001,6 @@
 (define rust-darling-macro-0.23.0
   (crate-source "darling_macro" "0.23.0"
                 "13fvzji9xyp304mgq720z5l0xgm54qj68jibwscagkynggn88fdc"))
-
-(define rust-darling-macro-0.24.0
-  (crate-source "darling_macro" "0.24.0"
-                "0pimi94crlpzw72s18vi96ysw3il197sdzz0bhrd476ll0ppkxb8"))
 
 (define rust-darling-macro-0.24.1
   (crate-source "darling_macro" "0.24.1"
@@ -1045,14 +1021,6 @@
 (define rust-dbus-0.9.12
   (crate-source "dbus" "0.9.12"
                 "0bmk4bn1r8isjxbl780nkdd7grjq2r7125g3r34l0hwcrh1rzdis"))
-
-(define rust-dbus-codegen-0.9.1
-  (crate-source "dbus-codegen" "0.9.1"
-                "0z3150dfkkg18izvi68j56inqpps5v25sq2n3n2d8wp8zgysk7d4"))
-
-(define rust-dbus-tree-0.9.2
-  (crate-source "dbus-tree" "0.9.2"
-                "027mnjc99ss8nab588aga9l8aag2pjvzkcfx35g5fm4fmscfcmpl"))
 
 (define rust-defmt-1.1.1
   (crate-source "defmt" "1.1.1"
@@ -1237,10 +1205,6 @@
 (define rust-either-1.16.0
   (crate-source "either" "1.16.0"
                 "17k7jfbdz7k440h6lws9baz8p9zlxgb41sig3w81h80nwzsjyqli"))
-
-(define rust-either-1.17.0
-  (crate-source "either" "1.17.0"
-                "07dagpwcfdzpkb1n7fxkx0q3nv80rnf81v7gwlz9ljx22mn8yply"))
 
 (define rust-either-1.18.0
   (crate-source "either" "1.18.0"
@@ -1914,10 +1878,6 @@
   (crate-source "heck" "0.5.0"
                 "1sjmpsdl8czyh9ywl3qcsfsq9a307dg4ni2vnlwgnzzqhc4y0113"))
 
-(define rust-hermit-abi-0.1.19
-  (crate-source "hermit-abi" "0.1.19"
-                "0cxcm8093nf5fyn114w8vxbrbcyvv91d4015rdnlgfll7cs6gd32"))
-
 (define rust-hermit-abi-0.5.2
   (crate-source "hermit-abi" "0.5.2"
                 "1744vaqkczpwncfy960j2hxrbjl1q01csm84jpd9dajbdr2yy3zw"))
@@ -2170,10 +2130,6 @@
   (crate-source "ini_core" "0.2.0"
                 "0q9sqxz6bjdml84mlgbh4izzbgrp8l41g7595wkbafglm4qpliks"))
 
-(define rust-inotify-0.11.4
-  (crate-source "inotify" "0.11.4"
-                "1j7jkacw6cxra4jf1sbndkpkbm5qm0bvxpcms36cjghq3aaf2fqm"))
-
 (define rust-inotify-0.11.5
   (crate-source "inotify" "0.11.5"
                 "14p5gkhk95yk536zncfrjywy2yxrxf06yrfsnx89bd6a0ylhxh2c"))
@@ -2398,10 +2354,6 @@
   (crate-source "kqueue-sys" "1.1.2"
                 "11xhzsgwc82g85072c6m8nimxxqkax4n40sikcsk9hks5573la87"))
 
-(define rust-ksni-0.2.2
-  (crate-source "ksni" "0.2.2"
-                "0ny832wm7nd2kaaxhmdrq5cd0vy1q1dd7f42air5avh1vl5k2d29"))
-
 (define rust-ksni-0.3.6
   (crate-source "ksni" "0.3.6"
                 "0nr1g2vbah7c3hgsijkfwyl55d1phbqcfhca7dn27jyj9k148jw1"))
@@ -2525,10 +2477,6 @@
 (define rust-libredox-0.1.18
   (crate-source "libredox" "0.1.18"
                 "0lj6dqz0pzwm32zqss320bhjryg7vymkxa575pzhc7ig6jg2ahy9"))
-
-(define rust-libredox-0.1.19
-  (crate-source "libredox" "0.1.19"
-                "1yl5s2g4s072829l4sis97shg98dlk5qhr6mylmhp8b4cw2sa9i0"))
 
 (define rust-libredox-0.1.20
   (crate-source "libredox" "0.1.20"
@@ -2814,10 +2762,6 @@
 (define rust-mpris-server-0.10.0
   (crate-source "mpris-server" "0.10.0"
                 "0aqkg6w8d31m5l6cvcx2ly8523z8rdbbvvj0xlswq5lmka73bkvh"))
-
-(define rust-muda-0.17.2
-  (crate-source "muda" "0.17.2"
-                "0xv1x0rgzr9pi63074rg1f7qz0q5lrihblbqsy1h71l99rdfr7vw"))
 
 (define rust-muda-0.19.3
   (crate-source "muda" "0.19.3"
@@ -3415,10 +3359,6 @@
   (crate-source "plain" "0.2.3"
                 "19n1xbxb4wa7w891268bzf6cbwq4qvdb86bik1z129qb0xnnnndl"))
 
-(define rust-png-0.17.16
-  (crate-source "png" "0.17.16"
-                "09kmkms9fmkbkarw0lnf0scqvjwwg3r7riddag0i3q39r0pil5c2"))
-
 (define rust-png-0.18.1
   (crate-source "png" "0.18.1"
                 "0qca282xp8a6d7mikxrwji3f52mjn4vnqxz2v9iz5adj665rnxk0"))
@@ -3822,10 +3762,6 @@
 (define rust-redox-syscall-0.5.18
   (crate-source "redox_syscall" "0.5.18"
                 "0b9n38zsxylql36vybw18if68yc9jczxmbyzdwyhb9sifmag4azd"))
-
-(define rust-redox-syscall-0.9.2
-  (crate-source "redox_syscall" "0.9.2"
-                "1zm2mqij8bw9mj1znaw8ljh6k4f8canyxazp1rn4wp9cpfjkvjgi"))
 
 (define rust-redox-syscall-0.9.3
   (crate-source "redox_syscall" "0.9.3"
@@ -4511,10 +4447,6 @@
   (crate-source "strsim" "0.11.1"
                 "0kzvqlw8hxqb7y598w1s0hxlnmi84sg5vsipp3yg5na5d1rvba3x"))
 
-(define rust-strsim-0.8.0
-  (crate-source "strsim" "0.8.0"
-                "0sjsm7hrvjdifz661pjxq5w4hf190hx53fra8dfvamacvff139cf"))
-
 (define rust-strum-0.27.2
   (crate-source "strum" "0.27.2"
                 "1ksb9jssw4bg9kmv9nlgp2jqa4vnsa3y4q9zkppvl952q7vdc8xg"))
@@ -4750,10 +4682,6 @@
 (define rust-termwiz-0.23.3
   (crate-source "termwiz" "0.23.3"
                 "1xzq6l7rx285ax57dz8gdh44kp1790x0knvfynmimgfc89rb6xj6"))
-
-(define rust-textwrap-0.11.0
-  (crate-source "textwrap" "0.11.0"
-                "0q5hky03ik3y50s9sz25r438bc4nwhqc6dqwynv4wylc807n29nk"))
 
 (define rust-textwrap-0.16.2
   (crate-source "textwrap" "0.16.2"
@@ -5047,10 +4975,6 @@
   (crate-source "transpose" "0.2.3"
                 "0zp74v7jrjg4jr654dncdj6hqvacicsywyhc62jawgxwhvnimmhs"))
 
-(define rust-tray-icon-0.21.3
-  (crate-source "tray-icon" "0.21.3"
-                "0378wl43dgllxivqxg776vb522jj3dn3bmn45w375c6f8fhmms55"))
-
 (define rust-tray-icon-0.24.2
   (crate-source "tray-icon" "0.24.2"
                 "0zi5dka5a8lz0xq36igkr4lmqg0kvbgik95j3jniik9py3ipjn84"))
@@ -5155,10 +5079,6 @@
   (crate-source "unicode-truncate" "2.0.1"
                 "19g9af5v0a8xaigqbs9hi9csxkg1fff07ycilvwfaqw64fhq1cqn"))
 
-(define rust-unicode-width-0.1.14
-  (crate-source "unicode-width" "0.1.14"
-                "1bzn2zv0gp8xxbxbhifw778a7fc93pa6a1kj24jgg9msj07f7mkx"))
-
 (define rust-unicode-width-0.2.2
   (crate-source "unicode-width" "0.2.2"
                 "0m7jjzlcccw716dy9423xxh0clys8pfpllc5smvfxrzdf66h9b5l"))
@@ -5246,10 +5166,6 @@
 (define rust-vcpkg-0.2.15
   (crate-source "vcpkg" "0.2.15"
                 "09i4nf5y8lig6xgj3f7fyrvzd3nlaw4znrihw8psidvv5yk4xkdc"))
-
-(define rust-vec-map-0.8.2
-  (crate-source "vec_map" "0.8.2"
-                "1481w9g1dw9rxp3l6snkdqihzyrd2f8vispzqmwjwsdyhw8xzggi"))
 
 (define rust-vergen-9.0.6
   (crate-source "vergen" "9.0.6"
@@ -5410,10 +5326,6 @@
 (define rust-wayland-backend-0.3.15
   (crate-source "wayland-backend" "0.3.15"
                 "0pbm8j3vv6baqz312biwqfi4qzadbi6nng9v4p3nx4afnlhdsmr8"))
-
-(define rust-wayland-backend-0.3.16
-  (crate-source "wayland-backend" "0.3.16"
-                "1f2l7zw10cwid6444w86szvr08wvgkhi6a31k64nz2y5s40wyv01"))
 
 (define rust-wayland-backend-0.3.17
   (crate-source "wayland-backend" "0.3.17"
@@ -6066,10 +5978,6 @@
 (define rust-xml-rs-0.7.0
   (crate-source "xml-rs" "0.7.0"
                 "1hp9kf80y9qm3aiqg5psyshqfkcrjgifbcm2c2nc5qlzs80vc71w"))
-
-(define rust-xml-rs-0.8.29
-  (crate-source "xml-rs" "0.8.29"
-                "19y8s93sh2dx21bqlpagkixld2c66f3rln0j9k4k7zqxxnrgjl74"))
 
 (define rust-y4m-0.8.0
   (crate-source "y4m" "0.8.0"
