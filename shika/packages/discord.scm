@@ -4,6 +4,8 @@
 (define-module (shika packages discord)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages gcc)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages pulseaudio)
@@ -73,9 +75,11 @@ It implements Discord's local RPC servers for Rich Presence support.")
      (list arrpc-bun-bin
            bash-minimal
            electron-41
+           fontconfig
            gcc
            pipewire
-           pulseaudio))
+           pulseaudio
+           xdg-utils))
     (native-inputs
      (list bun-bin))
     (arguments
@@ -139,7 +143,9 @@ It implements Discord's local RPC servers for Rich Presence support.")
                      (wrapper (string-append bin "/equibop"))
                      (bash (assoc-ref inputs "bash-minimal"))
                      (bash-bin (string-append bash "/bin/bash"))
-                     (electron (assoc-ref inputs "electron")))
+                     (electron (assoc-ref inputs "electron"))
+                     (fontconfig (assoc-ref inputs "fontconfig-minimal"))
+                     (xdg-utils (assoc-ref inputs "xdg-utils")))
                 (mkdir-p app-dir)
                 (copy-file app-asar (string-append app-dir "/app.asar"))
                 (mkdir-p bin)
@@ -148,10 +154,15 @@ It implements Discord's local RPC servers for Rich Presence support.")
                     (display
                      (string-join
                       `(,(string-append "#!" bash-bin)
+                        ,(string-append "export FONTCONFIG_PATH=\"" fontconfig "/etc/fonts:"
+                                        electron "${FONTCONFIG_PATH:+:$FONTCONFIG_PATH}\"")
+                        ,(string-append "export PATH=\"" xdg-utils
+                                        "/bin${PATH:+:$PATH}\"")
+                        "export ELECTRON_OZONE_PLATFORM_HINT=\"auto\""
                         "flags_file=\"${XDG_CONFIG_HOME:-$HOME/.config}/equibop-flags.conf\""
                         "[[ -f \"$flags_file\" ]] &&"
                         "mapfile -t flags < <(grep -vE '^[[:space:]]*(#|$)' \"$flags_file\")"
-                        ,(string-append "exec \"" electron "/bin/electron\" \""
+                        ,(string-append "exec \"" electron "/share/electron/electron\" \""
                                         app-dir "/app.asar\" \"${flags[@]}\" \"$@\""))
                       "\n"))))
                 (chmod wrapper #o755)
