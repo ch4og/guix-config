@@ -1,4 +1,4 @@
-#!/usr/bin/env -S guix shell blue stow -- env -S blue -f
+#!/usr/bin/env -S guix shell guix blue emacs-no-x stow curl -- env -S blue -f
 ;; -*- mode: scheme -*-
 ;; SPDX-FileCopyrightText: 2026 Nikita Mitasov <me@ch4og.com>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -15,15 +15,31 @@
 
 (add-to-load-path config-root)
 
+(define emacs-options
+  "(setq enable-local-eval t enable-local-variables :all)")
+
+(define emacs-format-expression
+  "(progn (scheme-mode) (hack-local-variables) (indent-region (point-min) (point-max)) (save-buffer))")
+
+(define (emacs-format-command file)
+  (string-join `("emacs" "--batch" "--quick"
+                 "--eval" ,(string-append "'" emacs-options "'")
+                 ,file
+                 "--eval" ,(string-append "'" emacs-format-expression "'")) " "))
+
 (define-command (style-command args)
   ((invoke "style")
    (category 'shika)
-   (synopsis "Style all files")
-   (help "Style all .scm files"))
-  (system (string-join `("find" ,(string-append config-root "/shika")
-                         "-type f"
-                         "-name '*.scm'"
-                         "-exec guix style -f {} \\;") " ")))
+   (synopsis "Format Scheme files")
+   (help "Format all .scm files and blue with Emacs"))
+  (let ((format-command (emacs-format-command "{}")))
+    (system (string-join `("find"
+                           ,(string-append config-root "/shika")
+                           ,(string-append config-root "/etc")
+                           "-type f"
+                           "-name '*.scm'"
+                           "-exec" ,format-command "\\;") " "))
+    (system (emacs-format-command (string-append config-root "/blue")))))
 
 (define-command (update-command args)
   ((invoke "up")
