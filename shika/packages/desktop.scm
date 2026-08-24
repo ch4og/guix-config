@@ -84,7 +84,7 @@
 (define-public hyperheadset
   (package
     (name "hyperheadset")
-    (version "1.10.0")
+    (version "1.10.1")
     (source
      (origin
        (method git-fetch)
@@ -94,7 +94,7 @@
               (recursive? #t)))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0y3v6qfppa5qz7aa7y6swpm9r8xc56v8ldv8y3zw8h3hzbsm2x98"))))
+        (base32 "1r48n1bsxrz3ys0j5xxqjqibqjawvi50wwhgmsgic3bpl08qy2rl"))))
     (build-system cargo-build-system)
     (arguments
      (list
@@ -107,7 +107,9 @@
               (let ((share (string-append #$output "/share")))
                 (mkdir-p (string-append share "/applications"))
                 (copy-file "hyper-headset.desktop"
-                           (string-append share "/applications/hyper-headset.desktop"))))))))
+                           (string-append share "/applications/hyper-headset.desktop")))
+              (wrap-program (string-append #$output "/bin/hyper_headset")
+                `("HYPERHEADSET_NO_AUTO_UDEV" = ("1"))))))))
     (native-inputs (list pkg-config))
     (inputs (cons* dbus
                    eudev
