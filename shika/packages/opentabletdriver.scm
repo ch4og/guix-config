@@ -16,21 +16,18 @@
   #:use-module (nonguix download)
   #:use-module ((guix licenses) #:prefix license:))
 
-(define otd-version "0.6.7")
-(define otd-source
-  (origin
-    (method git-fetch)
-    (uri (git-reference
-          (url "https://github.com/OpenTabletDriver/OpenTabletDriver")
-          (commit (string-append "v" otd-version))))
-    (sha256
-     (base32 "0q3wc7zv7fadc0w7iihzysc0g4xwalv6mfmk0qwpzxnq73advgcc"))))
-
 (define-public opentabletdriver
   (package
     (name "opentabletdriver")
-    (version otd-version)
-    (source otd-source)
+    (version "0.6.7")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/OpenTabletDriver/OpenTabletDriver")
+             (commit (string-append "v" version))))
+       (sha256
+        (base32 "0q3wc7zv7fadc0w7iihzysc0g4xwalv6mfmk0qwpzxnq73advgcc"))))
     (build-system gnu-build-system)
      (arguments
       (list
@@ -182,7 +179,7 @@ AttrPressureRange=2:1
       (list (origin
               (method (nuget-restore #:dotnet dotnet
                                      #:solutions '("OpenTabletDriver.sln")))
-              (uri otd-source)
+              (uri (package-source opentabletdriver))
               (file-name "restored-nuget-dependencies")
               (sha256
                (base32 "0g8ia1jl8d8ywkygg016704pshl4fwdgvgaqpfbgg07m1ynjqywc")))))
@@ -205,8 +202,8 @@ compatibility in an easily configurable graphical user interface.")
 (define-public opentabletdriver-udev-rules
   (package
     (name "opentabletdriver-udev-rules")
-    (version otd-version)
-    (source otd-source)
+    (version (package-version opentabletdriver))
+    (source (package-source opentabletdriver))
     (build-system gnu-build-system)
     (arguments
       (list #:modules '((guix build utils)
