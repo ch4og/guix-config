@@ -39,7 +39,7 @@
                  "librespot-playback"
                  "librespot-connect")))
        (inputs
-        (shika-cargo-inputs 'rust-librespot-0.8.0.28bcb23))
+        (shika-cargo-inputs 'rust-librespot))
        (home-page "https://github.com/LargeModGames/spotatui-librespot")
        (synopsis "Open Source Spotify client library")
        (description
