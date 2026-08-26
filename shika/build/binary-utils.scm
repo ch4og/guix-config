@@ -12,7 +12,7 @@
             wrap-binaries-pkg))
 
 (define (input-library-paths inputs)
-  (search-path-as-list '("lib" "lib64")
+  (search-path-as-list '("lib" "lib64" "lib/nss")
                        (filter string? (map cdr inputs))))
 
 (define (binary-paths out plan)
@@ -49,10 +49,14 @@
       (display body port)))
   (chmod binary #o755))
 
+(define (input-shell inputs)
+  (search-input-file inputs "bin/sh"))
+
 (define* (wrap-binaries-with-ld #:key inputs outputs wrapper-plan dynamic-linker
                                 #:allow-other-keys)
   (let* ((out (assoc-ref outputs "out"))
          (ld (string-append (assoc-ref inputs "glibc") dynamic-linker))
+         (shell (input-shell inputs))
          (library-path (string-join (input-library-paths inputs) ":")))
     (for-each
      (lambda (plan)
@@ -62,7 +66,7 @@
            (write-wrapper
             binary
             (string-append
-             "#!/bin/sh\nexport LD_LIBRARY_PATH=\""
+             "#!" shell "\nexport LD_LIBRARY_PATH=\""
              library-path "${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}\"\n"
              "exec " ld " --argv0 \"$0\" --library-path " library-path
              " " hidden " \"$@\"\n")))))
@@ -71,6 +75,7 @@
 (define* (wrap-binaries-direct #:key inputs outputs wrapper-plan
                                #:allow-other-keys)
   (let* ((out (assoc-ref outputs "out"))
+         (shell (input-shell inputs))
          (library-path (string-join (input-library-paths inputs) ":")))
     (for-each
      (lambda (plan)
@@ -80,7 +85,7 @@
            (write-wrapper
             binary
             (string-append
-             "#!/bin/sh\nexport LD_LIBRARY_PATH=\""
+             "#!" shell "\nexport LD_LIBRARY_PATH=\""
              library-path "${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}\"\n"
              "exec -a \"$0\" " hidden " \"$@\"\n")))))
      wrapper-plan)))
@@ -88,6 +93,7 @@
 (define* (wrap-binaries-pkg #:key inputs outputs wrapper-plan
                             #:allow-other-keys)
   (let* ((out (assoc-ref outputs "out"))
+         (shell (input-shell inputs))
          (library-path (string-join (input-library-paths inputs) ":")))
     (for-each
      (lambda (plan)
@@ -97,7 +103,7 @@
            (write-wrapper
             binary
             (string-append
-             "#!/bin/sh\nexport LD_LIBRARY_PATH=\""
+             "#!" shell "\nexport LD_LIBRARY_PATH=\""
              library-path "${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}\"\n"
              "exec " hidden " \"$@\"\n")))))
      wrapper-plan)))
