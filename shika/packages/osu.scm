@@ -239,7 +239,12 @@ for overlay clients.")
                   (("/usr/bin/tosu-overlay")
                    (string-append out "/bin/tosu-overlay")))
                 (install-file desktop-file
-                              (string-append out "/share/applications")))))
+                              (string-append out "/share/applications"))
+                (let ((icon-directory
+                       (string-append out "/share/icons/hicolor/scalable/apps")))
+                  (mkdir-p icon-directory)
+                  (copy-file "res/logo.svg"
+                             (string-append icon-directory "/tosu-overlay.svg"))))))
           (add-after 'qt-wrap 'wrap-qt-deps
             (lambda* (#:key outputs #:allow-other-keys)
               (let ((bin (string-append (assoc-ref outputs "out") "/bin/tosu-overlay")))
