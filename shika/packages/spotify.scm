@@ -32,10 +32,10 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module ((nonguix licenses) #:prefix nonlicense:))
 
-(define-public spotify
+(define-public spotify-bin
   (let ((rev "99"))
     (package
-    (name "spotify")
+    (name "spotify-bin")
     (version "1.2.95.453.g0eeebbed")
     (source
      (origin
@@ -223,5 +223,3 @@ runs it directly with Guix's dynamic linker.")
     (description
      "Spicetify is a command-line tool to customize the Spotify client.")
     (license license:lgpl2.1+)))
-
-spicetify-cli
