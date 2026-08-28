@@ -2,8 +2,8 @@
 ;;; SPDX-License-Identifier: GPL-3.0-or-later
 
 (define-module (shika packages pywalfox)
-  #:use-module (guix download)
   #:use-module (guix gexp)
+  #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (guix build-system pyproject)
   #:use-module (guix build-system python)
@@ -18,10 +18,13 @@
     (version "2.9.0")
     (source
      (origin
-       (method url-fetch)
-       (uri ((@ (guix build-system pyproject) pypi-uri) name version))
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/Frewacom/pywalfox-native")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
        (sha256
-        (base32 "009mvn2f5i2nvaiygjniy3bv86yswm2z41a9644qd9yzg97yw3ca"))))
+        (base32 "19dslbppbf5kifygshnw3narb36aw5yrr52i36nwm00kmv0078zj"))))
     (build-system pyproject-build-system)
     (arguments
      (list
