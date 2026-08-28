@@ -23,7 +23,7 @@
 (define-public wakatime-cli
   (package
     (name "wakatime-cli")
-    (version "2.24.4")
+    (version "2.25.0")
     (source
      (origin
        (method git-fetch)
@@ -32,11 +32,11 @@
               (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0inc5md4dqv76h42bf2hgmygv26m7iwv342wxwbmsm7gidvragaj"))))
+        (base32 "166b9z3fdmrkbzjg2swwhg0salj00m677flsnfwc7ss1dkr8icc1"))))
     (build-system nix-go-build-system)
     (native-inputs (list bats execline perl python))
     (arguments
-     `(#:vendor-hash "1s8xrh93r71c0jcsz74dbzfdpz40q9nsja1ri0kb7gjkkp0241m5"
+     `(#:vendor-hash "08ari3pl4fbwk0adn2a6s0yy7h1dgr4axrdwcadnzpsx5ff91fn4"
        #:go ,go-1.26
        #:ldflags `("-X" ,(string-append "github.com/wakatime/wakatime-cli"
                                         "/pkg/version.Version=" ,version))))
